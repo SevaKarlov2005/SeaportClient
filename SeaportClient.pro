@@ -10,13 +10,16 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    authorizationwindow.cpp
+    authorizationwindow.cpp \
+    searchwindow.cpp
 
 HEADERS += \
-    authorizationwindow.h
+    authorizationwindow.h \
+    searchwindow.h
 
 FORMS += \
-    authorizationwindow.ui
+    authorizationwindow.ui \
+    searchwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
