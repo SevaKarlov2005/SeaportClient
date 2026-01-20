@@ -12,17 +12,20 @@ SOURCES += \
     loadingwindow.cpp \
     main.cpp \
     authorizationwindow.cpp \
-    searchwindow.cpp
+    searchwindow.cpp \
+    storagewindow.cpp
 
 HEADERS += \
     authorizationwindow.h \
     loadingwindow.h \
-    searchwindow.h
+    searchwindow.h \
+    storagewindow.h
 
 FORMS += \
     authorizationwindow.ui \
     loadingwindow.ui \
-    searchwindow.ui
+    searchwindow.ui \
+    storagewindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
