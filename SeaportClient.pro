@@ -12,18 +12,21 @@ SOURCES += \
     loadingwindow.cpp \
     main.cpp \
     authorizationwindow.cpp \
+    planningwindow.cpp \
     searchwindow.cpp \
     storagewindow.cpp
 
 HEADERS += \
     authorizationwindow.h \
     loadingwindow.h \
+    planningwindow.h \
     searchwindow.h \
     storagewindow.h
 
 FORMS += \
     authorizationwindow.ui \
     loadingwindow.ui \
+    planningwindow.ui \
     searchwindow.ui \
     storagewindow.ui
 
