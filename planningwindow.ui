@@ -495,6 +495,26 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
+            <item>
+             <property name="text">
+              <string>U</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Z</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>J</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
@@ -1602,7 +1622,7 @@ color: #000000;</string>
         <widget class="QComboBox" name="rig_filter_box">
          <property name="minimumSize">
           <size>
-           <width>155</width>
+           <width>180</width>
            <height>40</height>
           </size>
          </property>
@@ -1614,6 +1634,21 @@ color: #000000;</string>
          <item>
           <property name="text">
            <string>U</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Z</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>R</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>J</string>
           </property>
          </item>
         </widget>
@@ -1628,7 +1663,7 @@ color: #000000;</string>
          </property>
          <property name="minimumSize">
           <size>
-           <width>170</width>
+           <width>175</width>
            <height>40</height>
           </size>
          </property>
@@ -1676,6 +1711,46 @@ color: #000000;</string>
          <item>
           <property name="text">
            <string>Свободен</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается на складе</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Занят</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Направлен диспетчеру</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается диспетчером</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Направлен стивидору</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается стивидором</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Погружен</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Не погружен</string>
           </property>
          </item>
         </widget>
@@ -1999,7 +2074,22 @@ color: #000000;</string>
          </property>
          <item>
           <property name="text">
-           <string>Отказ</string>
+           <string>Свободно</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Погрузка</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Уплыло</string>
           </property>
          </item>
         </widget>
@@ -2285,6 +2375,26 @@ color: #000000;</string>
               <pointsize>12</pointsize>
              </font>
             </property>
+            <item>
+             <property name="text">
+              <string>U</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Z</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>J</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
@@ -2873,6 +2983,12 @@ color: #000000;</string>
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>34850.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -2977,6 +3093,12 @@ color: #000000;</string>
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>4850.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -3083,6 +3205,12 @@ color: #000000;</string>
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>30200.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -3187,6 +3315,12 @@ color: #000000;</string>
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>100.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -4059,6 +4193,12 @@ color: #000000;</string>
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>10000000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -4152,6 +4292,12 @@ color: #000000;</string>
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>10000000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -4411,6 +4557,51 @@ color: #000000;</string>
               <pointsize>12</pointsize>
              </font>
             </property>
+            <item>
+             <property name="text">
+              <string>GP</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>VH</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>RE</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>UT</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>TN</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>HR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>BU</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>PL</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>SN</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
@@ -4648,6 +4839,12 @@ color: #000000;</string>
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>10000000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -4735,6 +4932,12 @@ color: #000000;</string>
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>10000000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -4829,7 +5032,7 @@ color: #000000;</string>
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-147</y>
+         <y>0</y>
          <width>1002</width>
          <height>745</height>
         </rect>
@@ -5072,13 +5275,7 @@ color: #000000;</string>
             <property name="maximumSize">
              <size>
               <width>300</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="baseSize">
-             <size>
-              <width>300</width>
-              <height>0</height>
+              <height>40</height>
              </size>
             </property>
             <property name="font">
@@ -5089,6 +5286,46 @@ color: #000000;</string>
             <item>
              <property name="text">
               <string>GP</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>VH</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>RE</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>UT</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>TN</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>HR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>BU</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>PL</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>SN</string>
              </property>
             </item>
            </widget>
@@ -5331,6 +5568,12 @@ color: #000000;</string>
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>10000000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -5422,6 +5665,12 @@ color: #000000;</string>
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>10000000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -5505,7 +5754,22 @@ color: #000000;</string>
             </property>
             <item>
              <property name="text">
+              <string>Свободно</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Обрабатывается</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
               <string>Погрузка</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Уплыло</string>
              </property>
             </item>
            </widget>

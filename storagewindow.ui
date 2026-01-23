@@ -872,6 +872,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>13.715999999999999</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -960,6 +966,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>13.715999999999999</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -1041,6 +1053,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>2.438000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -1130,6 +1148,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>2.438000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -1211,6 +1235,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>2.895000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -1300,6 +1330,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>2.895000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -1381,6 +1417,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>30200.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -1470,6 +1512,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>30200.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -1548,6 +1596,9 @@ QRadioButton::indicator:checked
             </property>
             <property name="suffix">
              <string> шт</string>
+            </property>
+            <property name="maximum">
+             <number>10000</number>
             </property>
            </widget>
           </item>
@@ -1634,6 +1685,9 @@ QRadioButton::indicator:checked
             <property name="suffix">
              <string> шт</string>
             </property>
+            <property name="maximum">
+             <number>10000</number>
+            </property>
            </widget>
           </item>
           <item>
@@ -1677,7 +1731,7 @@ QRadioButton::indicator:checked
         <x>-1</x>
         <y>-1</y>
         <width>1011</width>
-        <height>601</height>
+        <height>641</height>
        </rect>
       </property>
       <property name="midLineWidth">
@@ -1695,7 +1749,7 @@ QRadioButton::indicator:checked
          <x>0</x>
          <y>0</y>
          <width>1009</width>
-         <height>599</height>
+         <height>639</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1725,10 +1779,16 @@ QRadioButton::indicator:checked
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QTableView" name="case_assigned_table">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>280</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
               <width>900</width>
-              <height>371</height>
+              <height>280</height>
              </size>
             </property>
             <property name="font">
@@ -1802,6 +1862,30 @@ QRadioButton::indicator:checked
            </widget>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="space_2_label">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
         </item>
         <item>
          <layout class="QGridLayout" name="gridLayout_3">
@@ -1949,7 +2033,7 @@ QRadioButton::indicator:checked
            <widget class="QComboBox" name="rig_assigned_filter_box">
             <property name="minimumSize">
              <size>
-              <width>147</width>
+              <width>200</width>
               <height>40</height>
              </size>
             </property>
@@ -1963,31 +2047,25 @@ QRadioButton::indicator:checked
               <string>U</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Z</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>J</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
            <widget class="QLineEdit" name="item_assigned_filter_edit">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>190</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="number_assigned_filter_edit">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -2008,10 +2086,31 @@ QRadioButton::indicator:checked
            </widget>
           </item>
           <item>
+           <widget class="QLineEdit" name="number_assigned_filter_edit">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>180</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QComboBox" name="status_assigned_filter_box">
             <property name="minimumSize">
              <size>
-              <width>110</width>
+              <width>120</width>
               <height>40</height>
              </size>
             </property>
@@ -2023,6 +2122,46 @@ QRadioButton::indicator:checked
             <item>
              <property name="text">
               <string>Свободен</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Обрабатывается на складе</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Занят</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Направлен диспетчеру</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Обрабатывается диспетчером</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Направлен стивидору</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Обрабатывается стивидором</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Погружен</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Не погружен</string>
              </property>
             </item>
            </widget>
@@ -2244,6 +2383,36 @@ QRadioButton::indicator:checked
          <item>
           <property name="text">
            <string>Отказ</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Принята</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается на складе</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Направлена на склад</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается в таможне</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Направлена в таможню</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается администратором</string>
           </property>
          </item>
         </widget>
@@ -2501,7 +2670,7 @@ QRadioButton::indicator:checked
         <widget class="QComboBox" name="rig_filter_box">
          <property name="minimumSize">
           <size>
-           <width>155</width>
+           <width>180</width>
            <height>40</height>
           </size>
          </property>
@@ -2513,6 +2682,21 @@ QRadioButton::indicator:checked
          <item>
           <property name="text">
            <string>U</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Z</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>R</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>J</string>
           </property>
          </item>
         </widget>
@@ -2575,6 +2759,46 @@ QRadioButton::indicator:checked
          <item>
           <property name="text">
            <string>Свободен</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается на складе</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Занят</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Направлен диспетчеру</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается диспетчером</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Направлен стивидору</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается стивидором</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Погружен</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Не погружен</string>
           </property>
          </item>
         </widget>
@@ -2732,7 +2956,7 @@ QRadioButton::indicator:checked
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-1389</y>
+         <y>0</y>
          <width>1002</width>
          <height>2032</height>
         </rect>
@@ -3622,6 +3846,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>13.715999999999999</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -3726,6 +3956,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>2.438000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -3832,6 +4068,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>2.895000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -3936,6 +4178,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>30200.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -4220,6 +4468,9 @@ QRadioButton::indicator:checked
             </property>
             <property name="suffix">
              <string> шт</string>
+            </property>
+            <property name="maximum">
+             <number>10000</number>
             </property>
            </widget>
           </item>
@@ -4791,6 +5042,9 @@ QRadioButton::indicator:checked
             </property>
             <property name="suffix">
              <string> д</string>
+            </property>
+            <property name="maximum">
+             <number>10000</number>
             </property>
            </widget>
           </item>
@@ -5893,7 +6147,7 @@ QRadioButton::indicator:checked
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-236</y>
+         <y>0</y>
          <width>1001</width>
          <height>879</height>
         </rect>
@@ -6009,13 +6263,7 @@ QRadioButton::indicator:checked
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="rig_read_edit">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+           <widget class="QComboBox" name="comboBox">
             <property name="minimumSize">
              <size>
               <width>300</width>
@@ -6025,7 +6273,13 @@ QRadioButton::indicator:checked
             <property name="maximumSize">
              <size>
               <width>300</width>
-              <height>16777215</height>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
              </size>
             </property>
             <property name="font">
@@ -6033,6 +6287,26 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
+            <item>
+             <property name="text">
+              <string>U</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Z</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>J</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
@@ -6638,6 +6912,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>34850.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -6742,6 +7022,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>4850.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -6848,6 +7134,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>30200.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -6952,6 +7244,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>100.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -7538,6 +7836,21 @@ QRadioButton::indicator:checked
               <string>U</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Z</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>J</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
@@ -7875,6 +8188,156 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
+            <item>
+             <property name="text">
+              <string>10</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>12</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>14</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>15</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>18</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>19</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>20</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>22</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>24</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>25</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>28</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>29</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>30</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>32</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>34</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>35</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>38</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>39</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>40</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>42</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>44</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>45</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>48</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>49</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>L0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>L2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>L4</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>L5</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>L8</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>L9</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
@@ -7964,7 +8427,122 @@ QRadioButton::indicator:checked
             </property>
             <item>
              <property name="text">
-              <string>GP</string>
+              <string>G0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>G1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>G2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>G3</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>V0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>V2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>V4</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R3</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>UT</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>TN</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>HR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>B0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>B1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>B3</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>B4</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>B5</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>B6</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>PL</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>S0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>S1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>S2</string>
              </property>
             </item>
            </widget>
@@ -8060,14 +8638,17 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
-            <property name="buttonSymbols">
-             <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
-            </property>
             <property name="suffix">
              <string> кг</string>
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>34850.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -8162,14 +8743,17 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
-            <property name="buttonSymbols">
-             <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
-            </property>
             <property name="suffix">
              <string> кг</string>
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>4850.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -8264,14 +8848,17 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
-            <property name="buttonSymbols">
-             <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
-            </property>
             <property name="suffix">
              <string> кг</string>
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>30200.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -8366,14 +8953,17 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
-            <property name="buttonSymbols">
-             <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
-            </property>
             <property name="suffix">
              <string> м3</string>
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>100.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -8477,7 +9067,7 @@ QRadioButton::indicator:checked
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-319</y>
+         <y>0</y>
          <width>1001</width>
          <height>968</height>
         </rect>
@@ -8614,6 +9204,21 @@ QRadioButton::indicator:checked
             <item>
              <property name="text">
               <string>U</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Z</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>J</string>
              </property>
             </item>
            </widget>
@@ -8995,6 +9600,21 @@ QRadioButton::indicator:checked
               <string>U</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Z</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>J</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
@@ -9332,6 +9952,156 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
+            <item>
+             <property name="text">
+              <string>10</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>12</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>14</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>15</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>18</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>19</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>20</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>22</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>24</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>25</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>28</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>29</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>30</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>32</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>34</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>35</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>38</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>39</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>40</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>42</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>44</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>45</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>48</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>49</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>L0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>L2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>L4</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>L5</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>L8</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>L9</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
@@ -9421,7 +10191,122 @@ QRadioButton::indicator:checked
             </property>
             <item>
              <property name="text">
-              <string>GP</string>
+              <string>G0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>G1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>G2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>G3</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>V0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>V2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>V4</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R3</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>UT</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>TN</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>HR</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>B0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>B1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>B3</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>B4</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>B5</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>B6</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>PL</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>S0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>S1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>S2</string>
              </property>
             </item>
            </widget>
@@ -9517,14 +10402,17 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
-            <property name="buttonSymbols">
-             <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
-            </property>
             <property name="suffix">
              <string> кг</string>
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>34850.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -9619,14 +10507,17 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
-            <property name="buttonSymbols">
-             <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
-            </property>
             <property name="suffix">
              <string> кг</string>
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>4850.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -9721,14 +10612,17 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
-            <property name="buttonSymbols">
-             <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
-            </property>
             <property name="suffix">
              <string> кг</string>
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>30200.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -9823,14 +10717,17 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
-            <property name="buttonSymbols">
-             <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
-            </property>
             <property name="suffix">
              <string> м3</string>
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>100.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -10084,6 +10981,21 @@ QRadioButton::indicator:checked
             <item>
              <property name="text">
               <string>U</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Z</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>J</string>
              </property>
             </item>
            </widget>

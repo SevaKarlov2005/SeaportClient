@@ -845,6 +845,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>13.715999999999999</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -925,6 +931,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>2.438000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -1007,6 +1019,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>2.895000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -1087,6 +1105,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>30200.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -1318,6 +1342,9 @@ QRadioButton::indicator:checked
             <property name="suffix">
              <string> шт</string>
             </property>
+            <property name="maximum">
+             <number>10000</number>
+            </property>
            </widget>
           </item>
           <item>
@@ -1398,6 +1425,16 @@ QRadioButton::indicator:checked
               <string>Авто</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Ж/Д</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Водный</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
@@ -1476,6 +1513,16 @@ QRadioButton::indicator:checked
             <item>
              <property name="text">
               <string>Авто</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Ж/Д</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Водный</string>
              </property>
             </item>
            </widget>
@@ -1708,6 +1755,11 @@ QRadioButton::indicator:checked
               <string>Крытый</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Открытый</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
@@ -1786,6 +1838,9 @@ QRadioButton::indicator:checked
             </property>
             <property name="suffix">
              <string> д</string>
+            </property>
+            <property name="maximum">
+             <number>10000</number>
             </property>
            </widget>
           </item>
@@ -2615,7 +2670,7 @@ QRadioButton::indicator:checked
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-1223</y>
+         <y>-289</y>
          <width>1001</width>
          <height>1832</height>
         </rect>
@@ -3374,6 +3429,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>13.715999999999999</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -3457,6 +3518,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>2.438000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -3542,6 +3609,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>2.895000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -3625,6 +3698,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>30200.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -3880,6 +3959,9 @@ QRadioButton::indicator:checked
             <property name="suffix">
              <string> шт</string>
             </property>
+            <property name="maximum">
+             <number>10000</number>
+            </property>
            </widget>
           </item>
           <item>
@@ -3969,6 +4051,16 @@ QRadioButton::indicator:checked
               <string>Авто</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Ж/Д</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Водный</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
@@ -4056,6 +4148,16 @@ QRadioButton::indicator:checked
             <item>
              <property name="text">
               <string>Авто</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Ж/Д</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Водный</string>
              </property>
             </item>
            </widget>
@@ -4315,6 +4417,11 @@ QRadioButton::indicator:checked
               <string>Крытый</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Открытый</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
@@ -4402,6 +4509,9 @@ QRadioButton::indicator:checked
             </property>
             <property name="suffix">
              <string> д</string>
+            </property>
+            <property name="maximum">
+             <number>10000</number>
             </property>
            </widget>
           </item>
@@ -5625,6 +5735,36 @@ QRadioButton::indicator:checked
            <string>Отказ</string>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string>Принята</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается на складе</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Направлена на склад</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается в таможне</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Направлена в таможню</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается администратором</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item row="1" column="2">
@@ -6021,6 +6161,21 @@ QRadioButton::indicator:checked
            <string>U</string>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string>Z</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>R</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>J</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item>
@@ -6081,6 +6236,46 @@ QRadioButton::indicator:checked
          <item>
           <property name="text">
            <string>Свободен</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается на складе</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Занят</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Направлен диспетчеру</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается диспетчером</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Направлен стивидору</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается стивидором</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Погружен</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Не погружен</string>
           </property>
          </item>
         </widget>
@@ -6302,7 +6497,22 @@ QRadioButton::indicator:checked
          </property>
          <item>
           <property name="text">
-           <string>Отказ</string>
+           <string>Свободно</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Обрабатывается</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Погрузка</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Уплыло</string>
           </property>
          </item>
         </widget>
@@ -6355,7 +6565,7 @@ QRadioButton::indicator:checked
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-1424</y>
+         <y>-409</y>
          <width>1002</width>
          <height>2032</height>
         </rect>
@@ -7251,6 +7461,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>13.715999999999999</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -7355,6 +7571,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>2.438000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -7461,6 +7683,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>2.895000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -7565,6 +7793,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>30200.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -7849,6 +8083,9 @@ QRadioButton::indicator:checked
             </property>
             <property name="suffix">
              <string> шт</string>
+            </property>
+            <property name="maximum">
+             <number>10000</number>
             </property>
            </widget>
           </item>
@@ -8423,6 +8660,9 @@ QRadioButton::indicator:checked
             </property>
             <property name="suffix">
              <string> д</string>
+            </property>
+            <property name="maximum">
+             <number>10000</number>
             </property>
            </widget>
           </item>
@@ -9525,7 +9765,7 @@ QRadioButton::indicator:checked
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
+         <y>-271</y>
          <width>1001</width>
          <height>879</height>
         </rect>
@@ -9659,6 +9899,26 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
+            <item>
+             <property name="text">
+              <string>U</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Z</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>J</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
@@ -10264,6 +10524,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>34850.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -10368,6 +10634,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>4850.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -10474,6 +10746,12 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>30200.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -10578,6 +10856,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>100.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -11450,6 +11734,15 @@ QRadioButton::indicator:checked
             <property name="decimals">
              <number>3</number>
             </property>
+            <property name="maximum">
+             <double>10000000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
+            </property>
+            <property name="value">
+             <double>0.000000000000000</double>
+            </property>
            </widget>
           </item>
           <item>
@@ -11543,6 +11836,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="decimals">
              <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>10000000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.001000000000000</double>
             </property>
            </widget>
           </item>
@@ -12158,6 +12457,31 @@ QRadioButton::indicator:checked
            <pointsize>12</pointsize>
           </font>
          </property>
+         <item>
+          <property name="text">
+           <string>Администратор</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Таможенник</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Тальман</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Диспетчер</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Стивидор</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
@@ -12627,6 +12951,31 @@ QRadioButton::indicator:checked
            <pointsize>12</pointsize>
           </font>
          </property>
+         <item>
+          <property name="text">
+           <string>Администратор</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Таможенник</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Тальман</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Диспетчер</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Стивидор</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item row="2" column="2">
