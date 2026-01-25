@@ -12,12 +12,11 @@ QT_END_NAMESPACE
 class AuthorizationWindow : public QMainWindow
 {
     Q_OBJECT
-
+private:
+    Ui::AuthorizationWindow *ui;
 public:
     AuthorizationWindow(QWidget *parent = nullptr);
     ~AuthorizationWindow();
-
-private:
-    Ui::AuthorizationWindow *ui;
 };
+
 #endif // AUTHORIZATIONWINDOW_H

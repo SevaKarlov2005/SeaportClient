@@ -3,20 +3,20 @@
 
 #include <QMainWindow>
 
+QT_BEGIN_NAMESPACE
 namespace Ui {
 class SearchWindow;
 }
+QT_END_NAMESPACE
 
 class SearchWindow : public QMainWindow
 {
     Q_OBJECT
-
+private:
+    Ui::SearchWindow *ui;
 public:
     explicit SearchWindow(QWidget *parent = nullptr);
     ~SearchWindow();
-
-private:
-    Ui::SearchWindow *ui;
 };
 
 #endif // SEARCHWINDOW_H

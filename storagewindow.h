@@ -3,20 +3,20 @@
 
 #include <QMainWindow>
 
+QT_BEGIN_NAMESPACE
 namespace Ui {
 class StorageWindow;
 }
+QT_END_NAMESPACE
 
 class StorageWindow : public QMainWindow
 {
     Q_OBJECT
-
+private:
+    Ui::StorageWindow *ui;
 public:
     explicit StorageWindow(QWidget *parent = nullptr);
     ~StorageWindow();
-
-private:
-    Ui::StorageWindow *ui;
 };
 
 #endif // STORAGEWINDOW_H
