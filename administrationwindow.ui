@@ -252,7 +252,7 @@ QRadioButton::indicator:checked
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
+         <y>-584</y>
          <width>1001</width>
          <height>1734</height>
         </rect>
@@ -1600,6 +1600,22 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
+            <property name="dateTime">
+             <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>2000</year>
+              <month>1</month>
+              <day>1</day>
+             </datetime>
+            </property>
+            <property name="displayFormat">
+             <string>dd.MM.yy</string>
+            </property>
+            <property name="timeSpec">
+             <enum>Qt::TimeSpec::LocalTime</enum>
+            </property>
            </widget>
           </item>
           <item>
@@ -1674,6 +1690,22 @@ QRadioButton::indicator:checked
              <font>
               <pointsize>12</pointsize>
              </font>
+            </property>
+            <property name="dateTime">
+             <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>2000</year>
+              <month>1</month>
+              <day>1</day>
+             </datetime>
+            </property>
+            <property name="displayFormat">
+             <string>dd.MM.yy</string>
+            </property>
+            <property name="timeSpec">
+             <enum>Qt::TimeSpec::LocalTime</enum>
             </property>
            </widget>
           </item>
@@ -2443,6 +2475,9 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
+            <property name="inputMethodHints">
+             <set>Qt::InputMethodHint::ImhNone</set>
+            </property>
            </widget>
           </item>
           <item>
@@ -2670,7 +2705,7 @@ QRadioButton::indicator:checked
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-289</y>
+         <y>-652</y>
          <width>1001</width>
          <height>1832</height>
         </rect>
@@ -4244,6 +4279,12 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
+            <property name="displayFormat">
+             <string>dd.MM.yy</string>
+            </property>
+            <property name="timeSpec">
+             <enum>Qt::TimeSpec::LocalTime</enum>
+            </property>
            </widget>
           </item>
           <item>
@@ -4327,6 +4368,22 @@ QRadioButton::indicator:checked
              <font>
               <pointsize>12</pointsize>
              </font>
+            </property>
+            <property name="dateTime">
+             <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>2000</year>
+              <month>1</month>
+              <day>1</day>
+             </datetime>
+            </property>
+            <property name="displayFormat">
+             <string>dd.MM.yy</string>
+            </property>
+            <property name="timeSpec">
+             <enum>Qt::TimeSpec::LocalTime</enum>
             </property>
            </widget>
           </item>
@@ -6565,7 +6622,7 @@ QRadioButton::indicator:checked
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-409</y>
+         <y>-754</y>
          <width>1002</width>
          <height>2032</height>
         </rect>
@@ -8375,6 +8432,22 @@ QRadioButton::indicator:checked
             <property name="keyboardTracking">
              <bool>true</bool>
             </property>
+            <property name="dateTime">
+             <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>2000</year>
+              <month>1</month>
+              <day>1</day>
+             </datetime>
+            </property>
+            <property name="displayFormat">
+             <string>dd.MM.yy</string>
+            </property>
+            <property name="timeSpec">
+             <enum>Qt::TimeSpec::LocalTime</enum>
+            </property>
            </widget>
           </item>
           <item>
@@ -8467,6 +8540,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="buttonSymbols">
              <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
+            </property>
+            <property name="displayFormat">
+             <string>dd.MM.yy</string>
+            </property>
+            <property name="timeSpec">
+             <enum>Qt::TimeSpec::LocalTime</enum>
             </property>
            </widget>
           </item>
@@ -9765,7 +9844,7 @@ QRadioButton::indicator:checked
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-271</y>
+         <y>0</y>
          <width>1001</width>
          <height>879</height>
         </rect>
