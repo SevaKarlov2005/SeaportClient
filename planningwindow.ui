@@ -981,7 +981,7 @@ QRadioButton::indicator:checked
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
+         <y>-447</y>
          <width>1002</width>
          <height>1046</height>
         </rect>
