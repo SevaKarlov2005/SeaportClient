@@ -18,7 +18,7 @@ PlanningWindow::PlanningWindow(QWidget *parent) : QMainWindow(parent)
     QRegularExpression number_pattern(R"([0-9])");
     QRegularExpression IMO_pattern(R"([0-9]{7})");
     QRegularExpression position_pattern(R"([A-Z][0-9]{2})");
-    QRegularExpression ship_name_pattern(R"([@#\$%\^&\*\(\)_\+\=\{\}\[\]\|\\;:"'<>,\./\?~0-9A-Za-zА-Яа-я\-])");
+    QRegularExpression ship_name_pattern(R"([@#\$%\^&\*\(\)_\+\=\{\}\[\]\|\\;:"'<>,\./\?~0-9A-Za-zА-Яа-я\-]+)");
     QRegularExpression country_pattern(R"([A-Za-zА-Яа-я \-]+)");
 
     // Установка валидаторов для работы с контейнером
@@ -27,7 +27,7 @@ PlanningWindow::PlanningWindow(QWidget *parent) : QMainWindow(parent)
     this->ui->number_work_edit->setValidator(new QRegularExpressionValidator(number_pattern));
 
     // Установка валидаторов для назначения морского судна
-    this->ui->new_ship_edit->setValidator(new QRegularExpressionValidator(ship_name_pattern));
+    this->ui->new_ship_edit->setValidator(new QRegularExpressionValidator(IMO_pattern));
     this->ui->new_position_edit->setValidator(new QRegularExpressionValidator(position_pattern));
 
     // Установка валидаторов для фильтра контейнеров

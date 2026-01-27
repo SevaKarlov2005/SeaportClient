@@ -31,10 +31,10 @@ AdministrationWindow::AdministrationWindow(QWidget *parent) : QMainWindow(parent
     QRegularExpression item_pattern(R"([0-9]{6})");
     QRegularExpression number_pattern(R"([0-9])");
     QRegularExpression IMO_pattern(R"([0-9]{7})");
-    QRegularExpression ship_name_pattern(R"([@#\$%\^&\*\(\)_\+\=\{\}\[\]\|\\;:"'<>,\./\?~0-9A-Za-zА-Яа-я\-])");
+    QRegularExpression ship_name_pattern(R"([@#\$%\^&\*\(\)_\+\=\{\}\[\]\|\\;:"'<>,\./\?~0-9A-Za-zА-Яа-я\-]+)");
     QRegularExpression FIO_pattern(R"([А-Яа-яA-Za-z \-]+)");
-    QRegularExpression username_pattern(R"([@#\$%\^&\*\(\)_\+\=\{\}\[\]\|\\;:"'<>,\./\?~0-9A-Za-z\-])");
-    QRegularExpression password_pattern(R"([@#\$%\^&\*\(\)_\+\=\{\}\[\]\|\\;:"'<>,\./\?~0-9A-Za-z\-])");
+    QRegularExpression username_pattern(R"([@#\$%\^&\*\(\)_\+\=\{\}\[\]\|\\;:"'<>,\./\?~0-9A-Za-z\-]{12,16})");
+    QRegularExpression password_pattern(R"([@#\$%\^&\*\(\)_\+\=\{\}\[\]\|\\;:"'<>,\./\?~0-9A-Za-z\-]{12,16})");
 
     // Установка валидаторов для добавления заявки
     this->ui->organization_add_edit->setValidator(new QRegularExpressionValidator(organization_pattern));
