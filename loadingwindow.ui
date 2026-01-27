@@ -1069,7 +1069,7 @@ QRadioButton::indicator:checked
         <widget class="QComboBox" name="rig_filter_box">
          <property name="minimumSize">
           <size>
-           <width>155</width>
+           <width>170</width>
            <height>40</height>
           </size>
          </property>
@@ -1110,7 +1110,7 @@ QRadioButton::indicator:checked
          </property>
          <property name="minimumSize">
           <size>
-           <width>170</width>
+           <width>180</width>
            <height>40</height>
           </size>
          </property>
@@ -1344,13 +1344,7 @@ QRadioButton::indicator:checked
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="rig_read_edit">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+           <widget class="QComboBox" name="rig_read_box">
             <property name="minimumSize">
              <size>
               <width>300</width>
@@ -1360,7 +1354,7 @@ QRadioButton::indicator:checked
             <property name="maximumSize">
              <size>
               <width>300</width>
-              <height>16777215</height>
+              <height>40</height>
              </size>
             </property>
             <property name="font">
@@ -1368,6 +1362,26 @@ QRadioButton::indicator:checked
               <pointsize>12</pointsize>
              </font>
             </property>
+            <item>
+             <property name="text">
+              <string>U</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Z</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>R</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>J</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
@@ -4562,6 +4576,22 @@ QRadioButton::indicator:checked
             <property name="keyboardTracking">
              <bool>true</bool>
             </property>
+            <property name="dateTime">
+             <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>2000</year>
+              <month>1</month>
+              <day>1</day>
+             </datetime>
+            </property>
+            <property name="displayFormat">
+             <string>dd.MM.yy</string>
+            </property>
+            <property name="timeSpec">
+             <enum>Qt::TimeSpec::LocalTime</enum>
+            </property>
            </widget>
           </item>
           <item>
@@ -4654,6 +4684,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="buttonSymbols">
              <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
+            </property>
+            <property name="displayFormat">
+             <string>dd.MM.yy</string>
+            </property>
+            <property name="timeSpec">
+             <enum>Qt::TimeSpec::LocalTime</enum>
             </property>
            </widget>
           </item>
