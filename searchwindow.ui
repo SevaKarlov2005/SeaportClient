@@ -1098,7 +1098,7 @@ QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-171</y>
+         <y>0</y>
          <width>1002</width>
          <height>2072</height>
         </rect>
@@ -2902,6 +2902,22 @@ QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal
             <property name="keyboardTracking">
              <bool>true</bool>
             </property>
+            <property name="dateTime">
+             <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>2000</year>
+              <month>1</month>
+              <day>1</day>
+             </datetime>
+            </property>
+            <property name="displayFormat">
+             <string>dd.MM.yy</string>
+            </property>
+            <property name="timeSpec">
+             <enum>Qt::TimeSpec::LocalTime</enum>
+            </property>
            </widget>
           </item>
           <item>
@@ -2994,6 +3010,12 @@ QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal
             </property>
             <property name="buttonSymbols">
              <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
+            </property>
+            <property name="displayFormat">
+             <string>dd.MM.yy</string>
+            </property>
+            <property name="timeSpec">
+             <enum>Qt::TimeSpec::LocalTime</enum>
             </property>
            </widget>
           </item>

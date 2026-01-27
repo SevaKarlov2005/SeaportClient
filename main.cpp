@@ -10,7 +10,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    AdministrationWindow w;
+    SearchWindow w;
     w.show();
     return a.exec();
 }
