@@ -158,6 +158,18 @@ QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical,
 QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal
 {
     background: #C5CAE9;
+}
+
+*:disabled
+{
+    background-color: #BBBBBB;
+	color: black;
+}
+
+QTabWidget QTabBar::tab:disabled
+{
+    background-color: #BBBBBB;
+    color: black;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -310,6 +322,9 @@ QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal
      </item>
      <item row="3" column="1">
       <widget class="QLineEdit" name="password_edit">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -340,6 +355,9 @@ QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal
      </item>
      <item row="1" column="1">
       <widget class="QLineEdit" name="username_edit">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -530,9 +548,9 @@ QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal
        <colorrole role="Button">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>255</red>
-          <green>255</green>
-          <blue>255</blue>
+          <red>187</red>
+          <green>187</green>
+          <blue>187</blue>
          </color>
         </brush>
        </colorrole>
@@ -557,18 +575,18 @@ QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal
        <colorrole role="Base">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>255</red>
-          <green>255</green>
-          <blue>255</blue>
+          <red>187</red>
+          <green>187</green>
+          <blue>187</blue>
          </color>
         </brush>
        </colorrole>
        <colorrole role="Window">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>255</red>
-          <green>255</green>
-          <blue>255</blue>
+          <red>187</red>
+          <green>187</green>
+          <blue>187</blue>
          </color>
         </brush>
        </colorrole>

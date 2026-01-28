@@ -200,6 +200,18 @@ QRadioButton::indicator:checked
     border: 2px solid #C5CAE9;
     border-radius: 7px;
     background-color: #5c6bc0;
+}
+
+*:disabled
+{
+    background-color: #BBBBBB;
+	color: black;
+}
+
+QTabWidget QTabBar::tab:disabled
+{
+    background-color: #BBBBBB;
+    color: black;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -981,7 +993,7 @@ QRadioButton::indicator:checked
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-447</y>
+         <y>0</y>
          <width>1002</width>
          <height>1046</height>
         </rect>
@@ -1710,47 +1722,12 @@ color: #000000;</string>
          </property>
          <item>
           <property name="text">
-           <string>Свободен</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Обрабатывается на складе</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Занят</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
            <string>Направлен диспетчеру</string>
           </property>
          </item>
          <item>
           <property name="text">
            <string>Обрабатывается диспетчером</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Направлен стивидору</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Обрабатывается стивидором</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Погружен</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Не погружен</string>
           </property>
          </item>
         </widget>
@@ -2241,7 +2218,7 @@ color: #000000;</string>
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
+         <y>-280</y>
          <width>1001</width>
          <height>879</height>
         </rect>
@@ -5032,7 +5009,7 @@ color: #000000;</string>
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
+         <y>-147</y>
          <width>1002</width>
          <height>745</height>
         </rect>
@@ -5755,11 +5732,6 @@ color: #000000;</string>
             <item>
              <property name="text">
               <string>Свободно</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Обрабатывается</string>
              </property>
             </item>
             <item>

@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>SearchWindow</class>
  <widget class="QMainWindow" name="SearchWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -158,6 +161,18 @@ QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical,
 QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal
 {
     background: #C5CAE9;
+}
+
+*:disabled
+{
+    background-color: #BBBBBB;
+	color: black;
+}
+
+QTabWidget QTabBar::tab:disabled
+{
+    background-color: #BBBBBB;
+    color: black;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -925,37 +940,12 @@ QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal
          </property>
          <item>
           <property name="text">
-           <string>Отказ</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Принята</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Обрабатывается на складе</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Направлена на склад</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
            <string>Обрабатывается в таможне</string>
           </property>
          </item>
          <item>
           <property name="text">
            <string>Направлена в таможню</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Обрабатывается администратором</string>
           </property>
          </item>
         </widget>
@@ -2904,12 +2894,12 @@ QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal
             </property>
             <property name="dateTime">
              <datetime>
-              <hour>0</hour>
+              <hour>3</hour>
               <minute>0</minute>
               <second>0</second>
-              <year>2000</year>
-              <month>1</month>
-              <day>1</day>
+              <year>1999</year>
+              <month>12</month>
+              <day>31</day>
              </datetime>
             </property>
             <property name="displayFormat">

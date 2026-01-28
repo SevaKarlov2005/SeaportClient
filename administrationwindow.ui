@@ -200,6 +200,18 @@ QRadioButton::indicator:checked
     border: 2px solid #C5CAE9;
     border-radius: 7px;
     background-color: #5c6bc0;
+}
+
+*:disabled
+{
+    background-color: #BBBBBB;
+	color: black;
+}
+
+QTabWidget QTabBar::tab:disabled
+{
+    background-color: #BBBBBB;
+    color: black;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -252,7 +264,7 @@ QRadioButton::indicator:checked
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-584</y>
+         <y>0</y>
          <width>1001</width>
          <height>1734</height>
         </rect>
@@ -1602,12 +1614,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="dateTime">
              <datetime>
-              <hour>0</hour>
+              <hour>3</hour>
               <minute>0</minute>
               <second>0</second>
-              <year>2000</year>
-              <month>1</month>
-              <day>1</day>
+              <year>1999</year>
+              <month>12</month>
+              <day>31</day>
              </datetime>
             </property>
             <property name="displayFormat">
@@ -1693,12 +1705,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="dateTime">
              <datetime>
-              <hour>0</hour>
+              <hour>3</hour>
               <minute>0</minute>
               <second>0</second>
-              <year>2000</year>
-              <month>1</month>
-              <day>1</day>
+              <year>1999</year>
+              <month>12</month>
+              <day>31</day>
              </datetime>
             </property>
             <property name="displayFormat">
@@ -2705,7 +2717,7 @@ QRadioButton::indicator:checked
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-652</y>
+         <y>0</y>
          <width>1001</width>
          <height>1832</height>
         </rect>
@@ -4371,12 +4383,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="dateTime">
              <datetime>
-              <hour>0</hour>
+              <hour>3</hour>
               <minute>0</minute>
               <second>0</second>
-              <year>2000</year>
-              <month>1</month>
-              <day>1</day>
+              <year>1999</year>
+              <month>12</month>
+              <day>31</day>
              </datetime>
             </property>
             <property name="displayFormat">
@@ -6622,7 +6634,7 @@ QRadioButton::indicator:checked
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-754</y>
+         <y>0</y>
          <width>1002</width>
          <height>2032</height>
         </rect>
@@ -8434,12 +8446,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="dateTime">
              <datetime>
-              <hour>0</hour>
+              <hour>3</hour>
               <minute>0</minute>
               <second>0</second>
-              <year>2000</year>
-              <month>1</month>
-              <day>1</day>
+              <year>1999</year>
+              <month>12</month>
+              <day>31</day>
              </datetime>
             </property>
             <property name="displayFormat">

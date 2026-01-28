@@ -200,6 +200,18 @@ QRadioButton::indicator:checked
     border: 2px solid #C5CAE9;
     border-radius: 7px;
     background-color: #5c6bc0;
+}
+
+*:disabled
+{
+    background-color: #BBBBBB;
+	color: black;
+}
+
+QTabWidget QTabBar::tab:disabled
+{
+    background-color: #BBBBBB;
+    color: black;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -281,7 +293,7 @@ QRadioButton::indicator:checked
        <rect>
         <x>10</x>
         <y>550</y>
-        <width>302</width>
+        <width>979</width>
         <height>42</height>
        </rect>
       </property>
@@ -307,6 +319,30 @@ QRadioButton::indicator:checked
          </property>
          <property name="text">
           <string>Отправить в администрацию</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="reception_work_label">
+         <property name="minimumSize">
+          <size>
+           <width>670</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>650</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string/>
          </property>
         </widget>
        </item>
@@ -1157,47 +1193,12 @@ QRadioButton::indicator:checked
          </property>
          <item>
           <property name="text">
-           <string>Свободен</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Обрабатывается на складе</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Занят</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Направлен диспетчеру</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Обрабатывается диспетчером</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
            <string>Направлен стивидору</string>
           </property>
          </item>
          <item>
           <property name="text">
            <string>Обрабатывается стивидором</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Погружен</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Не погружен</string>
           </property>
          </item>
         </widget>
@@ -4578,12 +4579,12 @@ QRadioButton::indicator:checked
             </property>
             <property name="dateTime">
              <datetime>
-              <hour>0</hour>
+              <hour>3</hour>
               <minute>0</minute>
               <second>0</second>
-              <year>2000</year>
-              <month>1</month>
-              <day>1</day>
+              <year>1999</year>
+              <month>12</month>
+              <day>31</day>
              </datetime>
             </property>
             <property name="displayFormat">
