@@ -17,6 +17,8 @@ private:
 public:
     AuthorizationWindow(QWidget *parent = nullptr);
     ~AuthorizationWindow();
+    void CheckAuthorizationForm();
+    void Enter();
 };
 
 #endif // AUTHORIZATIONWINDOW_H
