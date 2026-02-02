@@ -834,6 +834,9 @@ QTabWidget QTabBar::tab:disabled
           </item>
           <item>
            <widget class="QDoubleSpinBox" name="length_add_spin">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -1614,12 +1617,32 @@ QTabWidget QTabBar::tab:disabled
             </property>
             <property name="dateTime">
              <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>1900</year>
+              <month>1</month>
+              <day>1</day>
+             </datetime>
+            </property>
+            <property name="maximumDateTime">
+             <datetime>
+              <hour>2</hour>
+              <minute>59</minute>
+              <second>59</second>
+              <year>10000</year>
+              <month>1</month>
+              <day>1</day>
+             </datetime>
+            </property>
+            <property name="minimumDateTime">
+             <datetime>
               <hour>3</hour>
               <minute>0</minute>
               <second>0</second>
-              <year>1999</year>
-              <month>12</month>
-              <day>31</day>
+              <year>1752</year>
+              <month>9</month>
+              <day>13</day>
              </datetime>
             </property>
             <property name="displayFormat">
@@ -1705,12 +1728,32 @@ QTabWidget QTabBar::tab:disabled
             </property>
             <property name="dateTime">
              <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>1900</year>
+              <month>1</month>
+              <day>1</day>
+             </datetime>
+            </property>
+            <property name="maximumDateTime">
+             <datetime>
+              <hour>2</hour>
+              <minute>59</minute>
+              <second>59</second>
+              <year>10000</year>
+              <month>1</month>
+              <day>1</day>
+             </datetime>
+            </property>
+            <property name="minimumDateTime">
+             <datetime>
               <hour>3</hour>
               <minute>0</minute>
               <second>0</second>
-              <year>1999</year>
-              <month>12</month>
-              <day>31</day>
+              <year>1752</year>
+              <month>9</month>
+              <day>13</day>
              </datetime>
             </property>
             <property name="displayFormat">
@@ -2482,6 +2525,12 @@ QTabWidget QTabBar::tab:disabled
               <height>40</height>
              </size>
             </property>
+            <property name="baseSize">
+             <size>
+              <width>0</width>
+              <height>40</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <pointsize>12</pointsize>
@@ -2649,7 +2698,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QPushButton" name="bid_feasibility_add_button">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="minimumSize">
              <size>
@@ -2670,7 +2719,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QPushButton" name="bid_add_button">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="minimumSize">
              <size>
@@ -2850,6 +2899,7 @@ QTabWidget QTabBar::tab:disabled
             <property name="font">
              <font>
               <pointsize>12</pointsize>
+              <bold>true</bold>
              </font>
             </property>
             <property name="text">
@@ -2889,7 +2939,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QLineEdit" name="organization_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -2973,7 +3023,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QLineEdit" name="INN_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -3051,7 +3101,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QLineEdit" name="phone_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -3129,7 +3179,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QLineEdit" name="mail_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -3207,7 +3257,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QLineEdit" name="cargo_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -3285,7 +3335,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QLineEdit" name="TNVED_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -3363,7 +3413,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QComboBox" name="direction_update_box">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -3451,7 +3501,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QDoubleSpinBox" name="length_update_spin">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -3541,7 +3591,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QDoubleSpinBox" name="width_update_spin">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -3631,7 +3681,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QDoubleSpinBox" name="height_update_spin">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -3721,7 +3771,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QDoubleSpinBox" name="weight_update_spin">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -3811,7 +3861,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QLineEdit" name="package_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -3899,7 +3949,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QTextEdit" name="feature_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="minimumSize">
              <size>
@@ -3984,7 +4034,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QSpinBox" name="quantity_update_spin">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -4074,7 +4124,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QComboBox" name="traffic_in_update_box">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -4173,7 +4223,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QComboBox" name="traffic_out_update_box">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -4272,7 +4322,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QDateEdit" name="date_in_update_date">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -4290,6 +4340,16 @@ QTabWidget QTabBar::tab:disabled
              <font>
               <pointsize>12</pointsize>
              </font>
+            </property>
+            <property name="dateTime">
+             <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>1900</year>
+              <month>1</month>
+              <day>1</day>
+             </datetime>
             </property>
             <property name="displayFormat">
              <string>dd.MM.yy</string>
@@ -4362,7 +4422,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QDateEdit" name="date_out_update_date">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -4383,12 +4443,12 @@ QTabWidget QTabBar::tab:disabled
             </property>
             <property name="dateTime">
              <datetime>
-              <hour>3</hour>
+              <hour>0</hour>
               <minute>0</minute>
               <second>0</second>
-              <year>1999</year>
-              <month>12</month>
-              <day>31</day>
+              <year>1900</year>
+              <month>1</month>
+              <day>1</day>
              </datetime>
             </property>
             <property name="displayFormat">
@@ -4462,7 +4522,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QComboBox" name="storage_update_box">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -4555,9 +4615,9 @@ QTabWidget QTabBar::tab:disabled
            </widget>
           </item>
           <item>
-           <widget class="QSpinBox" name="term_update_box">
+           <widget class="QSpinBox" name="term_update_spin">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -4648,7 +4708,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QTextEdit" name="demand_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="minimumSize">
              <size>
@@ -4732,7 +4792,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QLineEdit" name="producer_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -4816,7 +4876,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QLineEdit" name="sender_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -4900,7 +4960,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QLineEdit" name="port_from_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -4984,7 +5044,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QLineEdit" name="country_from_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -5068,7 +5128,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QLineEdit" name="port_to_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -5152,7 +5212,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QLineEdit" name="country_to_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -5236,7 +5296,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QLineEdit" name="receiver_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -5320,7 +5380,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QTextEdit" name="other_update_edit">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="minimumSize">
              <size>
@@ -5408,7 +5468,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QPushButton" name="bid_check_update_button">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="minimumSize">
              <size>
@@ -5435,7 +5495,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QPushButton" name="bid_feasibility_update_button">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="minimumSize">
              <size>
@@ -5456,7 +5516,7 @@ QTabWidget QTabBar::tab:disabled
           <item>
            <widget class="QPushButton" name="bid_update_button">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="minimumSize">
              <size>
@@ -5621,6 +5681,7 @@ QTabWidget QTabBar::tab:disabled
          <property name="font">
           <font>
            <pointsize>12</pointsize>
+           <bold>true</bold>
           </font>
          </property>
          <property name="text">
@@ -6186,7 +6247,7 @@ QTabWidget QTabBar::tab:disabled
        <rect>
         <x>60</x>
         <y>90</y>
-        <width>901</width>
+        <width>902</width>
         <height>42</height>
        </rect>
       </property>
@@ -6216,7 +6277,7 @@ QTabWidget QTabBar::tab:disabled
         <widget class="QComboBox" name="case_rig_filter_box">
          <property name="minimumSize">
           <size>
-           <width>155</width>
+           <width>175</width>
            <height>40</height>
           </size>
          </property>
@@ -6278,7 +6339,7 @@ QTabWidget QTabBar::tab:disabled
          </property>
          <property name="minimumSize">
           <size>
-           <width>170</width>
+           <width>180</width>
            <height>40</height>
           </size>
          </property>
@@ -6293,7 +6354,7 @@ QTabWidget QTabBar::tab:disabled
         <widget class="QComboBox" name="case_status_filter_box">
          <property name="minimumSize">
           <size>
-           <width>155</width>
+           <width>160</width>
            <height>40</height>
           </size>
          </property>
@@ -6779,6 +6840,7 @@ QTabWidget QTabBar::tab:disabled
             <property name="font">
              <font>
               <pointsize>12</pointsize>
+              <bold>true</bold>
              </font>
             </property>
             <property name="text">
@@ -6845,6 +6907,9 @@ QTabWidget QTabBar::tab:disabled
              <font>
               <pointsize>12</pointsize>
              </font>
+            </property>
+            <property name="text">
+             <string/>
             </property>
             <property name="readOnly">
              <bool>true</bool>
@@ -8446,12 +8511,12 @@ QTabWidget QTabBar::tab:disabled
             </property>
             <property name="dateTime">
              <datetime>
-              <hour>3</hour>
+              <hour>0</hour>
               <minute>0</minute>
               <second>0</second>
-              <year>1999</year>
-              <month>12</month>
-              <day>31</day>
+              <year>1900</year>
+              <month>1</month>
+              <day>1</day>
              </datetime>
             </property>
             <property name="displayFormat">
@@ -8552,6 +8617,16 @@ QTabWidget QTabBar::tab:disabled
             </property>
             <property name="buttonSymbols">
              <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
+            </property>
+            <property name="dateTime">
+             <datetime>
+              <hour>0</hour>
+              <minute>0</minute>
+              <second>0</second>
+              <year>1900</year>
+              <month>1</month>
+              <day>1</day>
+             </datetime>
             </property>
             <property name="displayFormat">
              <string>dd.MM.yy</string>
@@ -10247,6 +10322,7 @@ QTabWidget QTabBar::tab:disabled
             <property name="font">
              <font>
               <pointsize>12</pointsize>
+              <bold>true</bold>
              </font>
             </property>
             <property name="text">
@@ -11280,7 +11356,7 @@ QTabWidget QTabBar::tab:disabled
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_180">
           <item>
-           <widget class="QLabel" name="case_status_label">
+           <widget class="QLabel" name="case_status_read_label">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -11311,7 +11387,7 @@ QTabWidget QTabBar::tab:disabled
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="case_status_edit">
+           <widget class="QLineEdit" name="case_status_read_edit">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -11341,7 +11417,7 @@ QTabWidget QTabBar::tab:disabled
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="case_status_note_label">
+           <widget class="QLabel" name="case_status_read_note_label">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -11518,6 +11594,7 @@ QTabWidget QTabBar::tab:disabled
             <property name="font">
              <font>
               <pointsize>12</pointsize>
+              <bold>true</bold>
              </font>
             </property>
             <property name="text">
@@ -12705,6 +12782,9 @@ QTabWidget QTabBar::tab:disabled
        </item>
        <item row="8" column="1">
         <widget class="QLineEdit" name="repeat_update_edit">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -12751,6 +12831,9 @@ QTabWidget QTabBar::tab:disabled
        </item>
        <item row="7" column="1">
         <widget class="QLineEdit" name="new_password_update_edit">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -12772,6 +12855,9 @@ QTabWidget QTabBar::tab:disabled
        </item>
        <item row="2" column="1">
         <widget class="QLineEdit" name="surname_update_edit">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -12918,6 +13004,9 @@ QTabWidget QTabBar::tab:disabled
        </item>
        <item row="6" column="1">
         <widget class="QLineEdit" name="new_username_update_edit">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -12939,6 +13028,9 @@ QTabWidget QTabBar::tab:disabled
        </item>
        <item row="3" column="1">
         <widget class="QLineEdit" name="name_update_edit">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -13010,6 +13102,9 @@ QTabWidget QTabBar::tab:disabled
        </item>
        <item row="4" column="1">
         <widget class="QLineEdit" name="patronym_update_edit">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -13031,6 +13126,9 @@ QTabWidget QTabBar::tab:disabled
        </item>
        <item row="5" column="1">
         <widget class="QComboBox" name="job_update_box">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>300</width>
@@ -13398,6 +13496,9 @@ QTabWidget QTabBar::tab:disabled
       <layout class="QHBoxLayout" name="horizontalLayout_35">
        <item>
         <widget class="QPushButton" name="user_update_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>300</width>
@@ -13500,6 +13601,7 @@ QTabWidget QTabBar::tab:disabled
          <property name="font">
           <font>
            <pointsize>12</pointsize>
+           <bold>true</bold>
           </font>
          </property>
          <property name="text">
