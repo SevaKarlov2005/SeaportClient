@@ -2102,7 +2102,7 @@ void AdministrationWindow::FindBidRead()
     // TODO организовать ввод заявки в поля с сервера
 
     // Заглушка просмотра
-    bool is_correct = this->ui->bid_id_read_edit->text().length() >= 12 && this->ui->bid_id_read_edit->text().length() <= 16;
+    bool is_correct = this->ui->bid_id_read_edit->text().length() == 14;
     bool is_work = true;
     bool is_find = true;
 

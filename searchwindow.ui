@@ -681,7 +681,7 @@ QTabWidget QTabBar::tab:disabled
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>10</x>

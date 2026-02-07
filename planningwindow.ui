@@ -1008,7 +1008,7 @@ QTabWidget QTabBar::tab:disabled
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-447</y>
+         <y>0</y>
          <width>1002</width>
          <height>1046</height>
         </rect>
