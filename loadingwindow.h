@@ -17,6 +17,18 @@ private:
 public:
     explicit LoadingWindow(QWidget *parent = nullptr);
     ~LoadingWindow();
+    void CheckCaseOptionsWork();
+    void FindCaseWork();
+    void CheckResult();
+    void Reception();
+    void ClearCaseWorkForm(unsigned short mod);
+    void ActivateCaseWorkForm(bool flag, unsigned short mod);
+    void CheckCaseOptionsRead();
+    void FindCaseRead();
+    void ClearCaseReadForm();
+    void CheckBidIdRead();
+    void FindBidRead();
+    void ClearBidReadForm();
 };
 
 #endif // LOADINGWINDOW_H
