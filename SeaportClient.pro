@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -15,7 +15,8 @@ SOURCES += \
     authorizationwindow.cpp \
     planningwindow.cpp \
     searchwindow.cpp \
-    storagewindow.cpp
+    storagewindow.cpp \
+    tcpserverconnection.cpp
 
 HEADERS += \
     administrationwindow.h \
@@ -23,7 +24,8 @@ HEADERS += \
     loadingwindow.h \
     planningwindow.h \
     searchwindow.h \
-    storagewindow.h
+    storagewindow.h \
+    tcpserverconnection.h
 
 FORMS += \
     administrationwindow.ui \
@@ -37,3 +39,10 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+win32:CONFIG(release, debug|release): LIBS += "D:/LIB/OpenSSL/OpenSSL-Win64/lib/VC/x64/MD/libcrypto.lib" \
+                                              "D:/LIB/OpenSSL/OpenSSL-Win64/lib/VC/x64/MD/libssl.lib"
+else:win32:CONFIG(debug, debug|release): LIBS += "D:/LIB/OpenSSL/OpenSSL-Win64/lib/VC/x64/MD/libcrypto.lib" \
+                                                 "D:/LIB/OpenSSL/OpenSSL-Win64/lib/VC/x64/MD/libssl.lib"
+
+INCLUDEPATH += "D:/LIB/OpenSSL/OpenSSL-Win64/include"
