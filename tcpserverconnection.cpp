@@ -15,6 +15,9 @@ TCPServerConnection::TCPServerConnection(QObject *parent) : QObject{parent}
 
 TCPServerConnection::~TCPServerConnection()
 {
+    if (socket.state() != QAbstractSocket::UnconnectedState)
+        socket.abort();
+
     // Удаляем контекст шифрования
     EVP_CIPHER_CTX_free(this->ctx);
 }
@@ -77,9 +80,12 @@ QAbstractSocket::SocketState TCPServerConnection::CheckConnectionState()
 
 bool TCPServerConnection::Connect(QString ip_adress, int port)
 {
+    if (socket.state() != QAbstractSocket::UnconnectedState)
+        socket.abort();   // принудительно закрывает и сбрасывает
+
     this->socket.connectToHost(ip_adress, port);
 
-    if (this->socket.waitForConnected(50))
+    if (this->socket.waitForConnected(3000))
         return true;
     else
         return false;
@@ -91,7 +97,7 @@ bool TCPServerConnection::Disconnect()
     this->socket.disconnectFromHost();
 
     // Ждём отключения
-    if (this->socket.waitForDisconnected(50))
+    if (this->socket.waitForDisconnected(3000))
         return true;
     else
         return false;
@@ -113,7 +119,7 @@ bool TCPServerConnection::Send(QString data)
     while (this->socket.bytesToWrite() > 0)
     {
         QEventLoop loop;
-        QTimer::singleShot(50, [&loop]() { loop.quit(); });
+        QTimer::singleShot(100, [&loop]() { loop.quit(); });
         loop.exec();
     }
 
@@ -132,7 +138,7 @@ QString TCPServerConnection::Receive()
         if (header.size() < 7)
         {
             QEventLoop loop;
-            QTimer::singleShot(50, [&loop]() { loop.quit(); });
+            QTimer::singleShot(100, [&loop]() { loop.quit(); });
             loop.exec();
         }
     }
@@ -148,7 +154,7 @@ QString TCPServerConnection::Receive()
         if (bytes.size() < length)
         {
             QEventLoop loop;
-            QTimer::singleShot(50, [&loop]() { loop.quit(); });
+            QTimer::singleShot(100, [&loop]() { loop.quit(); });
             loop.exec();
         }
     }
