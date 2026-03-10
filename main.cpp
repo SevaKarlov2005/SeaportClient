@@ -1,16 +1,13 @@
-#include "authorizationwindow.h"
-#include "searchwindow.h"
-#include "loadingwindow.h"
-#include "storagewindow.h"
-#include "planningwindow.h"
-#include "administrationwindow.h"
-
 #include <QApplication>
+#include "authorizationwindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    LoadingWindow w;
+
+    AuthorizationWindow w;
+
     w.show();
+
     return a.exec();
 }

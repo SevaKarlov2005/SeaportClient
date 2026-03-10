@@ -2,6 +2,9 @@
 #define ADMINISTRATIONWINDOW_H
 
 #include <QMainWindow>
+#include <QStandardItemModel>
+#include <QCloseEvent>
+#include "tcpserverconnection.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -14,8 +17,19 @@ class AdministrationWindow : public QMainWindow
     Q_OBJECT
 private:
     Ui::AdministrationWindow *ui;
+    QStandardItemModel* bid_model;
+    QStandardItemModel* case_model;
+    QStandardItemModel* ship_model;
+    int bid_page;
+    int case_page;
+    int ship_page;
+    QString host;
+    QString username;
+    QString bid_number;
+    QString bid_status;
+    TCPServerConnection connection;
 public:
-    explicit AdministrationWindow(QWidget *parent = nullptr);
+    explicit AdministrationWindow(QString surname, QString name, QString patronym, QString username, QWidget *parent = nullptr);
     ~AdministrationWindow();
     void CheckBidAddForm();
     void CheckBidAddContents();
@@ -31,6 +45,9 @@ public:
     void ClearBidUpdateForm();
     void ActivateBidUpdateForm(bool flag);
     void DeleteBid();
+    void BidList();
+    void CaseList();
+    void ShipList();
     void CheckBidIdRead();
     void FindBidRead();
     void ClearBidReadForm();
@@ -51,6 +68,7 @@ public:
     void ActivateUserUpdateForm(bool flag);
     void CheckUserOptionsDelete();
     void DeleteUser();
+    void closeEvent(QCloseEvent *event) override;
 };
 
 #endif // ADMINISTRATIONWINDOW_H

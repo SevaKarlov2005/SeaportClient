@@ -2,8 +2,9 @@
 #include "ui_administrationwindow.h"
 
 #include <QRegularExpressionValidator>
+#include <QMessageBox>
 
-AdministrationWindow::AdministrationWindow(QWidget *parent) : QMainWindow(parent)
+AdministrationWindow::AdministrationWindow(QString surname, QString name, QString patronym, QString username, QWidget *parent) : QMainWindow(parent)
 {
     // Установка интерфейса окна
     this->ui = new Ui::AdministrationWindow;
@@ -11,6 +12,51 @@ AdministrationWindow::AdministrationWindow(QWidget *parent) : QMainWindow(parent
 
     // Установка фиксированного размера окна
     setFixedSize(1045, 855);
+
+    // Удаление окна при закрытии
+    setAttribute(Qt::WA_DeleteOnClose);
+
+    // Отображение ФИО
+    this->ui->surname_label->setText("Фамилия: " + surname);
+    this->ui->name_label->setText("Имя: " + name);
+    this->ui->patronym_label->setText("Отчество: " + patronym);
+
+    // Установка хоста и имени пользователя
+    this->host = "10.240.138.246";
+    this->username = username;
+
+    // Инициализация таблицы заявок
+    this->bid_page = 1;
+
+    this->bid_model = new QStandardItemModel(0, 4);
+    this->bid_model->setHeaderData(0, Qt::Horizontal, "Идентификатор\nзаявки");
+    this->bid_model->setHeaderData(1, Qt::Horizontal, "Дата подачи\nзаявки");
+    this->bid_model->setHeaderData(2, Qt::Horizontal, "Дата последнего\nизменения");
+    this->bid_model->setHeaderData(3, Qt::Horizontal, "Статус");
+    this->ui->bid_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    this->ui->bid_table->setModel(this->bid_model);
+
+    // Инициализация таблицы контейнеров
+    this->case_page = 1;
+
+    this->case_model = new QStandardItemModel(0, 5);
+    this->case_model->setHeaderData(0, Qt::Horizontal, "Код\nвладельца");
+    this->case_model->setHeaderData(1, Qt::Horizontal, "Идентификатор\nкатегории\nоборудования");
+    this->case_model->setHeaderData(2, Qt::Horizontal, "Серийный\nномер");
+    this->case_model->setHeaderData(3, Qt::Horizontal, "Контрольное\nчисло");
+    this->case_model->setHeaderData(4, Qt::Horizontal, "Статус");
+    this->ui->case_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    this->ui->case_table->setModel(this->case_model);
+
+    // Инициализация таблицы морских судов
+    this->ship_page = 1;
+
+    this->ship_model = new QStandardItemModel(0, 3);
+    this->ship_model->setHeaderData(0, Qt::Horizontal, "IMO номер судна");
+    this->ship_model->setHeaderData(1, Qt::Horizontal, "Название судна");
+    this->ship_model->setHeaderData(2, Qt::Horizontal, "Статус");
+    this->ui->ship_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    this->ui->ship_table->setModel(this->ship_model);
 
     // Регулярные выражения для валидаторов
     QRegularExpression bid_id_pattern(R"([0-9]{5}-[0-9]{2}/ОМиДР)");
@@ -193,6 +239,33 @@ AdministrationWindow::AdministrationWindow(QWidget *parent) : QMainWindow(parent
     connect(this->ui->bid_id_delete_edit, &QLineEdit::textChanged, this->ui->bid_choose_delete_label, &QLabel::clear);
     connect(this->ui->bid_choose_delete_button, &QPushButton::clicked, this, &AdministrationWindow::DeleteBid);
 
+    // Установка связей между сигналами и методами для пагинации заявок
+    connect(this->ui->bid_id_filter_edit, &QLineEdit::textChanged, this, &AdministrationWindow::BidList);
+    connect(this->ui->bid_date_filter_edit, &QLineEdit::textChanged, this, &AdministrationWindow::BidList);
+    connect(this->ui->bid_change_filter_edit, &QLineEdit::textChanged, this, &AdministrationWindow::BidList);
+    connect(this->ui->bid_status_filter_box, &QComboBox::currentIndexChanged, this, &AdministrationWindow::BidList);
+    connect(this->ui->bid_left_button, &QPushButton::clicked, this, [this](){ this->bid_page--; BidList(); });
+    connect(this->ui->bid_right_button, &QPushButton::clicked, this, [this](){ this->bid_page++; BidList(); });
+    connect(this->ui->bid_table->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &AdministrationWindow::BidList);
+
+    // Установка связей между сигналами и методами для пагинации контейнеров
+    connect(this->ui->case_code_filter_edit, &QLineEdit::textChanged, this, &AdministrationWindow::CaseList);
+    connect(this->ui->case_rig_filter_box, &QComboBox::currentIndexChanged, this, &AdministrationWindow::CaseList);
+    connect(this->ui->case_item_filter_edit, &QLineEdit::textChanged, this, &AdministrationWindow::CaseList);
+    connect(this->ui->case_number_filter_edit, &QLineEdit::textChanged, this, &AdministrationWindow::CaseList);
+    connect(this->ui->case_status_filter_box, &QComboBox::currentIndexChanged, this, &AdministrationWindow::CaseList);
+    connect(this->ui->case_left_button, &QPushButton::clicked, this, [this](){ this->case_page--; CaseList(); });
+    connect(this->ui->case_right_button, &QPushButton::clicked, this, [this](){ this->case_page++; CaseList(); });
+    connect(this->ui->case_table->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &AdministrationWindow::CaseList);
+
+    // Установка связей между сигналами и методами для пагинации морских судов
+    connect(this->ui->ship_IMO_filter_edit, &QLineEdit::textChanged, this, &AdministrationWindow::ShipList);
+    connect(this->ui->ship_name_filter_edit, &QLineEdit::textChanged, this, &AdministrationWindow::ShipList);
+    connect(this->ui->ship_status_filter_box, &QComboBox::currentIndexChanged, this, &AdministrationWindow::ShipList);
+    connect(this->ui->ship_left_button, &QPushButton::clicked, this, [this](){ this->ship_page--; ShipList(); });
+    connect(this->ui->ship_right_button, &QPushButton::clicked, this, [this](){ this->ship_page++; ShipList(); });
+    connect(this->ui->ship_table->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &AdministrationWindow::ShipList);
+
     // Установка связей между сигналами и методами для просмотра заявки
     connect(this->ui->bid_id_read_edit, &QLineEdit::textChanged, this, &AdministrationWindow::CheckBidIdRead);
     connect(this->ui->bid_choose_read_button, &QPushButton::clicked, this, &AdministrationWindow::FindBidRead);
@@ -235,10 +308,16 @@ AdministrationWindow::AdministrationWindow(QWidget *parent) : QMainWindow(parent
     connect(this->ui->username_delete_edit, &QLineEdit::textChanged, this, &AdministrationWindow::CheckUserOptionsDelete);
     connect(this->ui->password_delete_edit, &QLineEdit::textChanged, this, &AdministrationWindow::CheckUserOptionsDelete);
     connect(this->ui->user_delete_button, &QPushButton::clicked, this, &AdministrationWindow::DeleteUser);
+
+    // Заполнение таблиц
+    BidList();
+    CaseList();
+    ShipList();
 }
 
 AdministrationWindow::~AdministrationWindow()
 {
+    this->connection.Disconnect();
     delete this->ui;
 }
 
@@ -864,11 +943,37 @@ void AdministrationWindow::CheckBidAddContents()
 
 void AdministrationWindow::CheckBidAddFeasibility()
 {
-    // TODO проверить наличие контейнеров и морских судов по код ТН ВЭД
-
-    // Заглушка проверки осуществимости
+    // Флаги проверок
     bool is_work = true;
     bool is_feasibility = true;
+
+    // Результат работы сервера
+    QString result;
+
+
+    // Устанавливаем соединение с сервером
+    is_work = this->connection.Connect(this->host, 8081);
+
+    if (is_work)
+    {
+        // Отправляем сообщение
+        is_work = this->connection.Send("A00" + this->ui->TNVED_add_edit->text() + '\v' + this->ui->country_to_add_edit->text());
+
+        if (is_work)
+        {
+            // Принимаем сообщение
+            result = this->connection.Receive();
+
+            is_work = result != "\x18";
+
+            if (is_work)
+                is_feasibility = result == "1";
+        }
+
+        // Удаляем соединение
+        if (this->connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+            this->connection.Disconnect();
+    }
 
     if (!is_work)
     {
@@ -889,14 +994,80 @@ void AdministrationWindow::CheckBidAddFeasibility()
             this->ui->bid_add_button->setEnabled(true);
         }
     }
+
+    if (!is_work)
+    {
+        QMessageBox box;
+
+        box.setIcon(QMessageBox::Critical);
+        box.setWindowTitle("Ошибка");
+        box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+        box.exec();
+    }
 }
 
 void AdministrationWindow::AddBid()
 {
-    // TODO организовать отправку заявки на сервер
-
-    // Заглушка отправки
+    // Флаги проверок
     bool is_work = true;
+
+    // Результат работы сервера
+    QString result;
+
+
+    // Устанавливаем соединение с сервером
+    is_work = connection.Connect(this->host, 8081);
+
+    if (is_work)
+    {
+        QString message = this->ui->organization_add_edit->text() + '\v' +
+                          this->ui->INN_add_edit->text() + '\v' +
+                          this->ui->phone_add_edit->text() + '\v' +
+                          this->ui->mail_add_edit->text() + '\v' +
+                          this->ui->cargo_add_edit->text() + '\v' +
+                          this->ui->TNVED_add_edit->text() + '\v' +
+                          this->ui->direction_add_box->currentText() + '\v' +
+                          QString::number(this->ui->length_add_spin->value()) + '\v' +
+                          QString::number(this->ui->width_add_spin->value()) + '\v' +
+                          QString::number(this->ui->height_add_spin->value()) + '\v' +
+                          QString::number(this->ui->weight_add_spin->value()) + '\v' +
+                          this->ui->package_add_edit->text() + '\v' +
+                          this->ui->feature_add_edit->toPlainText() + '\v' +
+                          QString::number(this->ui->quantity_add_spin->value()) + '\v' +
+                          this->ui->traffic_in_add_box->currentText() + '\v' +
+                          this->ui->traffic_out_add_box->currentText() + '\v' +
+                          this->ui->date_in_add_date->date().addYears(100).toString("yyyy-MM-dd") + '\v' +
+                          this->ui->date_out_add_date->date().addYears(100).toString("yyyy-MM-dd") + '\v' +
+                          this->ui->storage_add_box->currentText() + '\v' +
+                          QString::number(this->ui->term_add_spin->value()) + '\v' +
+                          this->ui->demand_add_edit->toPlainText() + '\v' +
+                          this->ui->producer_add_edit->text() + '\v' +
+                          this->ui->sender_add_edit->text() + '\v' +
+                          this->ui->port_from_add_edit->text() + '\v' +
+                          this->ui->country_from_add_edit->text() + '\v' +
+                          this->ui->port_to_add_edit->text() + '\v' +
+                          this->ui->country_to_add_edit->text() + '\v' +
+                          this->ui->receiver_add_edit->text() + '\v' +
+                          this->ui->other_add_edit->toPlainText() + '\v';
+
+        message += (this->ui->direction_add_box->currentText() == "Экспорт") ? "Направлена в таможню" : "Направлена на склад";
+
+        // Отправляем сообщение
+        is_work = this->connection.Send("A01" + message);
+
+        if (is_work)
+        {
+            // Принимаем сообщение
+            result = this->connection.Receive();
+
+            is_work = result != "\x18";
+        }
+
+        // Удаляем соединение
+        if (this->connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+            this->connection.Disconnect();
+    }
 
     if (!is_work)
     {
@@ -909,6 +1080,17 @@ void AdministrationWindow::AddBid()
 
         this->ui->space_1_label->setStyleSheet("color: #00FF00;");
         this->ui->space_1_label->setText("* Заявка отправлена");
+    }
+
+    if (!is_work)
+    {
+        QMessageBox box;
+
+        box.setIcon(QMessageBox::Critical);
+        box.setWindowTitle("Ошибка");
+        box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+        box.exec();
     }
 }
 
@@ -1047,7 +1229,42 @@ void AdministrationWindow::ClearBidAddForm()
 
 void AdministrationWindow::CheckBidIdUpdate()
 {
-    // TODO снятие заявки с занятости
+    // Флаги проверок
+    bool is_work = true;
+
+    // Результат работы сервера
+    QString result;
+
+    if (this->bid_number.length() == 14)
+    {
+
+        // Устанавливаем соединение с сервером
+        is_work = this->connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            // Отправляем сообщение
+            is_work = this->connection.Send("A02" + this->bid_status + '\v' + this->bid_number);
+
+            if (is_work)
+            {
+                // Принимаем сообщение
+                result = this->connection.Receive();
+
+                is_work = result != "\x18";
+
+                if (is_work)
+                {
+                    this->bid_number = "";
+                    this->bid_status = "";
+                }
+            }
+
+            // Удаляем соединение
+            if (this->connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                this->connection.Disconnect();
+        }
+    }
 
     ClearBidUpdateForm();
     ActivateBidUpdateForm(false);
@@ -1058,13 +1275,38 @@ void AdministrationWindow::CheckBidIdUpdate()
 
 void AdministrationWindow::FindBidUpdate()
 {
-    // TODO организовать отправку ID заявки на сервер
-
-    // Заглушка отправки
+    // Флаги проверок
     bool is_correct = this->ui->bid_id_update_edit->text().length() == 14;
     bool is_work = true;
     bool is_find = true;
     bool is_busy = false;
+
+    // Результат работы сервера
+    QString result;
+
+    if (is_correct)
+    {
+
+        is_work = this->connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            is_work = this->connection.Send("A03" + this->username + '\v' + this->ui->bid_id_update_edit->text());
+
+            if (is_work)
+            {
+                result = this->connection.Receive();
+
+                is_work = result != "\x18";
+                is_find = result != "\x00";
+                is_busy = result == "\x1A";
+            }
+
+            // Удаляем соединение
+            if (this->connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                this->connection.Disconnect();
+        }
+    }
 
     // Проверка идентификатора заявки
     if (!is_correct)
@@ -1119,6 +1361,60 @@ void AdministrationWindow::FindBidUpdate()
                 ActivateBidUpdateForm(true);
                 this->ui->bid_check_update_button->setEnabled(true);
             }
+        }
+    }
+
+    if (is_correct)
+    {
+        if (is_work)
+        {
+            if (is_find && !is_busy)
+            {
+                QStringList list = result.split('\v');
+
+                this->bid_number = list[1];
+                this->bid_status = list[32];
+
+                this->ui->organization_update_edit->setText(list[2]);
+                this->ui->INN_update_edit->setText(list[3]);
+                this->ui->phone_update_edit->setText(list[4]);
+                this->ui->mail_update_edit->setText(list[5]);
+                this->ui->cargo_update_edit->setText(list[6]);
+                this->ui->TNVED_update_edit->setText(list[7]);
+                this->ui->direction_update_box->setCurrentText(list[8]);
+                this->ui->length_update_spin->setValue(list[9].toDouble());
+                this->ui->width_update_spin->setValue(list[10].toDouble());
+                this->ui->height_update_spin->setValue(list[11].toDouble());
+                this->ui->weight_update_spin->setValue(list[12].toDouble());
+                this->ui->package_update_edit->setText(list[13]);
+                this->ui->feature_update_edit->setText(list[14]);
+                this->ui->quantity_update_spin->setValue(list[15].toInt());
+                this->ui->traffic_in_update_box->setCurrentText(list[16]);
+                this->ui->traffic_out_update_box->setCurrentText(list[17]);
+                this->ui->date_in_update_date->setDate(QDate::fromString(list[18], "yyyy-MM-dd").addYears(-100));
+                this->ui->date_out_update_date->setDate(QDate::fromString(list[19], "yyyy-MM-dd").addYears(-100));
+                this->ui->storage_update_box->setCurrentText(list[20]);
+                this->ui->term_update_spin->setValue(list[21].toInt());
+                this->ui->demand_update_edit->setText(list[22]);
+                this->ui->producer_update_edit->setText(list[23]);
+                this->ui->sender_update_edit->setText(list[24]);
+                this->ui->port_from_update_edit->setText(list[25]);
+                this->ui->country_from_update_edit->setText(list[26]);
+                this->ui->port_to_update_edit->setText(list[27]);
+                this->ui->country_to_update_edit->setText(list[28]);
+                this->ui->receiver_update_edit->setText(list[29]);
+                this->ui->other_update_edit->setText(list[30]);
+            }
+        }
+        else
+        {
+            QMessageBox box;
+
+            box.setIcon(QMessageBox::Critical);
+            box.setWindowTitle("Ошибка");
+            box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+            box.exec();
         }
     }
 }
@@ -1745,11 +2041,37 @@ void AdministrationWindow::CheckBidUpdateContents()
 
 void AdministrationWindow::CheckBidUpdateFeasibility()
 {
-    // TODO проверить наличие контейнеров и морских судов по код ТН ВЭД
-
-    // Заглушка проверки осуществимости
+    // Флаги проверок
     bool is_work = true;
     bool is_feasibility = true;
+
+    // Результат работы сервера
+    QString result;
+
+
+    // Устанавливаем соединение с сервером
+    is_work = this->connection.Connect(this->host, 8081);
+
+    if (is_work)
+    {
+        // Отправляем сообщение
+        is_work = this->connection.Send("A00" + this->ui->TNVED_update_edit->text() + '\v' + this->ui->country_to_update_edit->text());
+
+        if (is_work)
+        {
+            // Принимаем сообщение
+            result = this->connection.Receive();
+
+            is_work = result != "\x18";
+
+            if (is_work)
+                is_feasibility = result == "1";
+        }
+
+        // Удаляем соединение
+        if (this->connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+            this->connection.Disconnect();
+    }
 
     if (!is_work)
     {
@@ -1770,14 +2092,79 @@ void AdministrationWindow::CheckBidUpdateFeasibility()
             this->ui->bid_update_button->setEnabled(true);
         }
     }
+
+    if (!is_work)
+    {
+        QMessageBox box;
+
+        box.setIcon(QMessageBox::Critical);
+        box.setWindowTitle("Ошибка");
+        box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+        box.exec();
+    }
 }
 
 void AdministrationWindow::UpdateBid()
 {
-    // TODO организовать отправку заявки на сервер
-
-    // Заглушка отправки
+    // Флаги проверок
     bool is_work = true;
+
+    // Результат работы сервера
+    QString result;
+
+
+    // Устанавливаем соединение с сервером
+    is_work = this->connection.Connect(this->host, 8081);
+
+    if (is_work)
+    {
+        QString message = this->ui->organization_update_edit->text() + '\v' +
+                          this->ui->INN_update_edit->text() + '\v' +
+                          this->ui->phone_update_edit->text() + '\v' +
+                          this->ui->mail_update_edit->text() + '\v' +
+                          this->ui->cargo_update_edit->text() + '\v' +
+                          this->ui->TNVED_update_edit->text() + '\v' +
+                          this->ui->direction_update_box->currentText() + '\v' +
+                          QString::number(this->ui->length_update_spin->value()) + '\v' +
+                          QString::number(this->ui->width_update_spin->value()) + '\v' +
+                          QString::number(this->ui->height_update_spin->value()) + '\v' +
+                          QString::number(this->ui->weight_update_spin->value()) + '\v' +
+                          this->ui->package_update_edit->text() + '\v' +
+                          this->ui->feature_update_edit->toPlainText() + '\v' +
+                          QString::number(this->ui->quantity_update_spin->value()) + '\v' +
+                          this->ui->traffic_in_update_box->currentText() + '\v' +
+                          this->ui->traffic_out_update_box->currentText() + '\v' +
+                          this->ui->date_in_update_date->date().addYears(100).toString("yyyy-MM-dd") + '\v' +
+                          this->ui->date_out_update_date->date().addYears(100).toString("yyyy-MM-dd") + '\v' +
+                          this->ui->storage_update_box->currentText() + '\v' +
+                          QString::number(this->ui->term_update_spin->value()) + '\v' +
+                          this->ui->demand_update_edit->toPlainText() + '\v' +
+                          this->ui->producer_update_edit->text() + '\v' +
+                          this->ui->sender_update_edit->text() + '\v' +
+                          this->ui->port_from_update_edit->text() + '\v' +
+                          this->ui->country_from_update_edit->text() + '\v' +
+                          this->ui->port_to_update_edit->text() + '\v' +
+                          this->ui->country_to_update_edit->text() + '\v' +
+                          this->ui->receiver_update_edit->text() + '\v' +
+                          this->ui->other_update_edit->toPlainText() + '\v' +
+                          this->bid_number;
+
+        // Отправляем сообщение
+        is_work = connection.Send("A04" + message);
+
+        if (is_work)
+        {
+            // Принимаем сообщение
+            result = connection.Receive();
+
+            is_work = result != "\x18";
+        }
+
+        // Удаляем соединение
+        if (connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+            connection.Disconnect();
+    }
 
     if (!is_work)
     {
@@ -1789,6 +2176,17 @@ void AdministrationWindow::UpdateBid()
         this->ui->bid_id_update_edit->clear();
         this->ui->space_2_label->setStyleSheet("color: #00FF00;");
         this->ui->space_2_label->setText("* Заявка изменена");
+    }
+
+    if (!is_work)
+    {
+        QMessageBox box;
+
+        box.setIcon(QMessageBox::Critical);
+        box.setWindowTitle("Ошибка");
+        box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+        box.exec();
     }
 }
 
@@ -2027,13 +2425,38 @@ void AdministrationWindow::ActivateBidUpdateForm(bool flag)
 
 void AdministrationWindow::DeleteBid()
 {
-    // TODO организовать удаление заявки на сервере
-
-    // Заглушка отправки
+    // Флаги проверок
     bool is_correct = this->ui->bid_id_delete_edit->text().length() == 14;
     bool is_work = true;
     bool is_find = true;
     bool is_busy = false;
+
+    // Результат работы сервера
+    QString result;
+
+    if (is_correct)
+    {
+
+        is_work = connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            is_work = connection.Send("A05" + this->ui->bid_id_delete_edit->text());
+
+            if (is_work)
+            {
+                result = connection.Receive();
+
+                is_work = result != "\x18";
+                is_find = result != "\x00";
+                is_busy = result == "\x1A";
+            }
+
+            // Удаляем соединение
+            if (connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                connection.Disconnect();
+        }
+    }
 
     // Проверка идентификатора заявки
     if (!is_correct)
@@ -2088,6 +2511,396 @@ void AdministrationWindow::DeleteBid()
             }
         }
     }
+
+    if (is_correct)
+    {
+        if(!is_work)
+        {
+            QMessageBox box;
+
+            box.setIcon(QMessageBox::Critical);
+            box.setWindowTitle("Ошибка");
+            box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+            box.exec();
+        }
+    }
+}
+
+void AdministrationWindow::BidList()
+{
+    if ((this->ui->bid_id_filter_edit->text().length() == 14 || this->ui->bid_id_filter_edit->text() == "") &&
+        (this->ui->bid_date_filter_edit->text().length() == 8 || this->ui->bid_date_filter_edit->text() == "") &&
+        (this->ui->bid_change_filter_edit->text().length() == 8 || this->ui->bid_change_filter_edit->text() == ""))
+    {
+        QString message = "A06";
+
+        int section =  this->ui->bid_table->horizontalHeader()->sortIndicatorSection();
+        Qt::SortOrder order = this->ui->bid_table->horizontalHeader()->sortIndicatorOrder();
+
+        if (section == 0)
+            message += "b.bid_number";
+        else if (section == 1)
+            message += "b.date_add";
+        else if (section == 2)
+            message += "b.date_change";
+        else if (section == 3)
+            message += "b.bid_status";
+
+        if (order == Qt::AscendingOrder)
+            message += "\vASC";
+        else
+            message += "\vDESC";
+
+        message += ('\v' +QString::number(this->bid_page));
+
+        message += ("\v11");
+
+        if (this->ui->bid_id_filter_edit->text().length() == 14)
+            message += ('\v' + this->ui->bid_id_filter_edit->text());
+        else
+            message += '\v';
+
+        if (this->ui->bid_date_filter_edit->text().length() == 8)
+        {
+            QStringList list = this->ui->bid_date_filter_edit->text().split('.');
+
+            message += ('\v' + QString("20%1-%2-%3").arg(list[2]).arg(list[1]).arg(list[0]));
+        }
+        else
+            message += '\v';
+
+        if (this->ui->bid_change_filter_edit->text().length() == 8)
+        {
+            QStringList list = this->ui->bid_change_filter_edit->text().split('.');
+
+            message += ('\v' + QString("20%1-%2-%3").arg(list[2]).arg(list[1]).arg(list[0]));
+        }
+        else
+            message += '\v';
+
+        message += ('\v' + this->ui->bid_status_filter_box->currentText());
+
+        bool is_work = true;
+        bool is_find = true;
+        QString result;
+
+
+        is_work = connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            is_work = connection.Send(message);
+
+            if (is_work)
+            {
+                result = connection.Receive();
+
+                is_find = result != "\x00";
+                is_work = result != "\x18";
+
+                if (is_work && is_find)
+                {
+                    QStringList fields = result.split('\v');
+
+                    this->bid_page = fields[fields.length() - 2].toInt();
+
+                    if (this->bid_page == 1)
+                        this->ui->bid_left_button->setEnabled(false);
+                    else
+                        this->ui->bid_left_button->setEnabled(true);
+
+                    if (fields[fields.length() - 1] == "1")
+                        this->ui->bid_right_button->setEnabled(true);
+                    else
+                        this->ui->bid_right_button->setEnabled(false);
+
+                    this->bid_model->removeRows(0, this->bid_model->rowCount());
+
+                    for (int i = 0; i < (fields.length() - 2); i += 4)
+                    {
+                        this->bid_model->insertRow(this->bid_model->rowCount());
+
+                        this->bid_model->setData(this->bid_model->index(i / 4, 0), fields[i]);
+                        this->bid_model->setData(this->bid_model->index(i / 4, 1), QDate::fromString(fields[i + 1], "yyyy-MM-dd").toString("dd.MM.yy"));
+                        this->bid_model->setData(this->bid_model->index(i / 4, 2), QDate::fromString(fields[i + 2], "yyyy-MM-dd").toString("dd.MM.yy"));
+                        this->bid_model->setData(this->bid_model->index(i / 4, 3), fields[i + 3]);
+                    }
+
+                    this->ui->bid_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+                }
+            }
+
+            // Удаляем соединение
+            if (connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                connection.Disconnect();
+
+            if (!is_work || !is_find)
+            {
+                    this->ui->bid_left_button->setEnabled(false);
+                    this->ui->bid_right_button->setEnabled(false);
+
+                    this->bid_model->removeRows(0, this->bid_model->rowCount());
+                    this->ui->bid_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+                    this->bid_page = 1;
+            }
+        }
+    }
+    else
+    {
+        this->ui->bid_left_button->setEnabled(false);
+        this->ui->bid_right_button->setEnabled(false);
+
+        this->bid_model->removeRows(0, this->bid_model->rowCount());
+        this->ui->bid_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+        this->bid_page = 1;
+    }
+}
+
+void AdministrationWindow::CaseList()
+{
+    if ((this->ui->case_code_filter_edit->text().length() == 3 || this->ui->case_code_filter_edit->text() == "") &&
+        (this->ui->case_item_filter_edit->text().length() == 6 || this->ui->case_item_filter_edit->text() == "") &&
+        (this->ui->case_number_filter_edit->text().length() == 1 || this->ui->case_number_filter_edit->text() == ""))
+    {
+        QString message = "A07";
+
+        int section =  this->ui->case_table->horizontalHeader()->sortIndicatorSection();
+        Qt::SortOrder order = this->ui->case_table->horizontalHeader()->sortIndicatorOrder();
+
+        if (section == 0)
+            message += "c.owner_code";
+        else if (section == 1)
+            message += "e.equipment_type";
+        else if (section == 2)
+            message += "c.serial_number";
+        else if (section == 3)
+            message += "c.check_number";
+        else if (section == 4)
+            message += "s.container_status";
+
+        if (order == Qt::AscendingOrder)
+            message += "\vASC";
+        else
+            message += "\vDESC";
+
+        message += ('\v' +QString::number(this->case_page));
+
+        message += ("\v11");
+
+        if (this->ui->case_code_filter_edit->text().length() == 3)
+            message += ('\v' + this->ui->case_code_filter_edit->text());
+        else
+            message += '\v';
+
+        message += ('\v' + this->ui->case_rig_filter_box->currentText());
+
+        if (this->ui->case_item_filter_edit->text().length() == 6)
+            message += ('\v' + this->ui->case_item_filter_edit->text());
+        else
+            message += '\v';
+
+        if (this->ui->case_number_filter_edit->text().length() == 1)
+            message += ('\v' + this->ui->case_number_filter_edit->text());
+        else
+            message += '\v';
+
+        message += ('\v' + this->ui->case_status_filter_box->currentText());
+
+        bool is_work = true;
+        bool is_find = true;
+        QString result;
+
+
+        is_work = connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            is_work = connection.Send(message);
+
+            if (is_work)
+            {
+                result = connection.Receive();
+
+                is_find = result != "\x00";
+                is_work = result != "\x18";
+
+                if (is_work && is_find)
+                {
+                    QStringList fields = result.split('\v');
+
+                    this->case_page = fields[fields.length() - 2].toInt();
+
+                    if (this->case_page == 1)
+                        this->ui->case_left_button->setEnabled(false);
+                    else
+                        this->ui->case_left_button->setEnabled(true);
+
+                    if (fields[fields.length() - 1] == "1")
+                        this->ui->case_right_button->setEnabled(true);
+                    else
+                        this->ui->case_right_button->setEnabled(false);
+
+                    this->case_model->removeRows(0, this->case_model->rowCount());
+
+                    for (int i = 0; i < (fields.length() - 2); i += 5)
+                    {
+                        this->case_model->insertRow(this->case_model->rowCount());
+
+                        this->case_model->setData(this->case_model->index(i / 5, 0), fields[i]);
+                        this->case_model->setData(this->case_model->index(i / 5, 1), fields[i + 1]);
+                        this->case_model->setData(this->case_model->index(i / 5, 2), fields[i + 2]);
+                        this->case_model->setData(this->case_model->index(i / 5, 3), fields[i + 3]);
+                        this->case_model->setData(this->case_model->index(i / 5, 4), fields[i + 4]);
+                    }
+
+                    this->ui->case_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+                }
+            }
+
+            // Удаляем соединение
+            if (connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                connection.Disconnect();
+
+            if (!is_work || !is_find)
+            {
+                this->ui->case_left_button->setEnabled(false);
+                this->ui->case_right_button->setEnabled(false);
+
+                this->case_model->removeRows(0, this->case_model->rowCount());
+                this->ui->case_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+                this->case_page = 1;
+            }
+        }
+    }
+    else
+    {
+        this->ui->case_left_button->setEnabled(false);
+        this->ui->case_right_button->setEnabled(false);
+
+        this->case_model->removeRows(0, this->case_model->rowCount());
+        this->ui->case_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+        this->case_page = 1;
+    }
+}
+
+void AdministrationWindow::ShipList()
+{
+    if ((this->ui->ship_IMO_filter_edit->text().length() == 7 || this->ui->ship_IMO_filter_edit->text() == "") &&
+        (this->ui->ship_name_filter_edit->text().length() > 0 || this->ui->ship_name_filter_edit->text() == ""))
+    {
+        QString message = "A08";
+
+        int section =  this->ui->ship_table->horizontalHeader()->sortIndicatorSection();
+        Qt::SortOrder order = this->ui->ship_table->horizontalHeader()->sortIndicatorOrder();
+
+        if (section == 0)
+            message += "s.IMO_number";
+        else if (section == 1)
+            message += "s.ship_name";
+        else if (section == 2)
+            message += "st.ship_status";
+
+        if (order == Qt::AscendingOrder)
+            message += "\vASC";
+        else
+            message += "\vDESC";
+
+        message += ('\v' +QString::number(this->ship_page));
+
+        message += ("\v11");
+
+        if (this->ui->ship_IMO_filter_edit->text().length() == 7)
+            message += ('\v' + this->ui->ship_IMO_filter_edit->text());
+        else
+            message += '\v';
+
+        if (this->ui->ship_name_filter_edit->text().length() > 0)
+            message += ('\v' + this->ui->ship_name_filter_edit->text());
+        else
+            message += '\v';
+
+        message += ('\v' + this->ui->ship_status_filter_box->currentText());
+
+        bool is_work = true;
+        bool is_find = true;
+        QString result;
+
+
+        is_work = connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            is_work = connection.Send(message);
+
+            if (is_work)
+            {
+                result = connection.Receive();
+
+                is_find = result != "\x00";
+                is_work = result != "\x18";
+
+                if (is_work && is_find)
+                {
+                    QStringList fields = result.split('\v');
+
+                    this->ship_page = fields[fields.length() - 2].toInt();
+
+                    if (this->ship_page == 1)
+                        this->ui->ship_left_button->setEnabled(false);
+                    else
+                        this->ui->ship_left_button->setEnabled(true);
+
+                    if (fields[fields.length() - 1] == "1")
+                        this->ui->ship_right_button->setEnabled(true);
+                    else
+                        this->ui->ship_right_button->setEnabled(false);
+
+                    this->ship_model->removeRows(0, this->ship_model->rowCount());
+
+                    for (int i = 0; i < (fields.length() - 2); i += 3)
+                    {
+                        this->ship_model->insertRow(this->ship_model->rowCount());
+
+                        this->ship_model->setData(this->ship_model->index(i / 3, 0), fields[i]);
+                        this->ship_model->setData(this->ship_model->index(i / 3, 1), fields[i + 1]);
+                        this->ship_model->setData(this->ship_model->index(i / 3, 2), fields[i + 2]);
+                    }
+
+                    this->ui->ship_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+                }
+            }
+
+            // Удаляем соединение
+            if (connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                connection.Disconnect();
+
+            if (!is_work || !is_find)
+            {
+                this->ui->ship_left_button->setEnabled(false);
+                this->ui->ship_right_button->setEnabled(false);
+
+                this->ship_model->removeRows(0, this->ship_model->rowCount());
+                this->ui->ship_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+                this->ship_page = 1;
+            }
+        }
+    }
+    else
+    {
+        this->ui->ship_left_button->setEnabled(false);
+        this->ui->ship_right_button->setEnabled(false);
+
+        this->ship_model->removeRows(0, this->ship_model->rowCount());
+        this->ui->ship_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+        this->ship_page = 1;
+    }
 }
 
 void AdministrationWindow::CheckBidIdRead()
@@ -2099,12 +2912,36 @@ void AdministrationWindow::CheckBidIdRead()
 
 void AdministrationWindow::FindBidRead()
 {
-    // TODO организовать ввод заявки в поля с сервера
-
-    // Заглушка просмотра
+    // Флаги проверок
     bool is_correct = this->ui->bid_id_read_edit->text().length() == 14;
     bool is_work = true;
     bool is_find = true;
+
+    // Результат работы сервера
+    QString result;
+
+    if (is_correct)
+    {
+
+        is_work = connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            is_work = connection.Send("A09" + this->ui->bid_id_read_edit->text());
+
+            if (is_work)
+            {
+                result = connection.Receive();
+
+                is_work = result != "\x18";
+                is_find = result != "\x00";
+            }
+
+            // Удаляем соединение
+            if (connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                connection.Disconnect();
+        }
+    }
 
     // Проверка идентификатора заявки
     if (!is_correct)
@@ -2151,6 +2988,59 @@ void AdministrationWindow::FindBidRead()
         {
             this->ui->bid_choose_read_label->setStyleSheet("color: #00FF00;");
             this->ui->bid_choose_read_label->setText("* Заявка найдена");
+        }
+    }
+
+    if (is_correct)
+    {
+        if (is_work)
+        {
+            if (is_find)
+            {
+                QStringList list = result.split('\v');
+
+                this->ui->organization_read_edit->setText(list[2]);
+                this->ui->INN_read_edit->setText(list[3]);
+                this->ui->phone_read_edit->setText(list[4]);
+                this->ui->mail_read_edit->setText(list[5]);
+                this->ui->cargo_read_edit->setText(list[6]);
+                this->ui->TNVED_read_edit->setText(list[7]);
+                this->ui->direction_read_edit->setText(list[8]);
+                this->ui->length_read_spin->setValue(list[9].toDouble());
+                this->ui->width_read_spin->setValue(list[10].toDouble());
+                this->ui->height_read_spin->setValue(list[11].toDouble());
+                this->ui->weight_read_spin->setValue(list[12].toDouble());
+                this->ui->package_read_edit->setText(list[13]);
+                this->ui->feature_read_edit->setText(list[14]);
+                this->ui->quantity_read_spin->setValue(list[15].toInt());
+                this->ui->traffic_in_read_edit->setText(list[16]);
+                this->ui->traffic_out_read_edit->setText(list[17]);
+                this->ui->date_in_read_date->setDate(QDate::fromString(list[18], "yyyy-MM-dd").addYears(-100));
+                this->ui->date_out_read_date->setDate(QDate::fromString(list[19], "yyyy-MM-dd").addYears(-100));
+                this->ui->storage_read_edit->setText(list[20]);
+                this->ui->term_read_spin->setValue(list[21].toInt());
+                this->ui->demand_read_edit->setText(list[22]);
+                this->ui->producer_read_edit->setText(list[23]);
+                this->ui->sender_read_edit->setText(list[24]);
+                this->ui->port_from_read_edit->setText(list[25]);
+                this->ui->country_from_read_edit->setText(list[26]);
+                this->ui->port_to_read_edit->setText(list[27]);
+                this->ui->country_to_read_edit->setText(list[28]);
+                this->ui->receiver_read_edit->setText(list[29]);
+                this->ui->other_read_edit->setText(list[30]);
+                this->ui->comment_read_edit->setText(list[31]);
+                this->ui->bid_status_read_edit->setText(list[32]);
+            }
+        }
+        else
+        {
+            QMessageBox box;
+
+            box.setIcon(QMessageBox::Critical);
+            box.setWindowTitle("Ошибка");
+            box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+            box.exec();
         }
     }
 }
@@ -2200,15 +3090,42 @@ void AdministrationWindow::CheckCaseOptionsRead()
 
 void AdministrationWindow::FindCaseRead()
 {
-    // TODO организовать ввод контейнера в поля с сервера
-
-    // Заглушка просмотра
+    // Флаги проверок
     bool is_code = this->ui->code_read_edit->text().length() == 3;
     bool is_item = this->ui->item_read_edit->text().length() == 6;
     bool is_number = this->ui->number_read_edit->text().length() == 1;
     bool is_correct = is_code && is_item && is_number;
     bool is_work = true;
     bool is_find = true;
+
+    // Результат работы сервера
+    QString result;
+
+    if (is_correct)
+    {
+
+        is_work = connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            is_work = connection.Send("A10" + this->ui->code_read_edit->text() + '\v' +
+                                            this->ui->rig_read_box->currentText() + '\v' +
+                                            this->ui->item_read_edit->text() + '\v' +
+                                            this->ui->number_read_edit->text());
+
+            if (is_work)
+            {
+                result = connection.Receive();
+
+                is_work = result != "\x18";
+                is_find = result != "\x00";
+            }
+
+            // Удаляем соединение
+            if (connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                connection.Disconnect();
+        }
+    }
 
     // Проверка кода владельца
     if (!is_code)
@@ -2297,7 +3214,6 @@ void AdministrationWindow::FindCaseRead()
     }
     else
     {
-
         if (!is_find)
         {
             this->ui->case_choose_read_label->setStyleSheet("color: #F5F116;");
@@ -2307,6 +3223,39 @@ void AdministrationWindow::FindCaseRead()
         {
             this->ui->case_choose_read_label->setStyleSheet("color: #00FF00;");
             this->ui->case_choose_read_label->setText("* Контейнер найден");
+        }
+    }
+
+    if (is_correct)
+    {
+        if (is_work)
+        {
+            if (is_find)
+            {
+                QStringList list = result.split('\v');
+
+                this->ui->country_read_edit->setText(list[5]);
+                this->ui->size_read_edit->setText(list[6]);
+                this->ui->case_type_read_edit->setText(list[7]);
+                this->ui->gross_read_spin->setValue(list[8].toDouble());
+                this->ui->tare_weight_read_spin->setValue(list[9].toDouble());
+                this->ui->carrying_read_spin->setValue(list[10].toDouble());
+                this->ui->capacity_read_spin->setValue(list[11].toDouble());
+                this->ui->IMO_read_edit->setText(list[14]);
+                this->ui->position_read_edit->setText(list[12]);
+                this->ui->claim_read_edit->setText(list[15]);
+                this->ui->case_status_read_edit->setText(list[13]);
+            }
+        }
+        else
+        {
+            QMessageBox box;
+
+            box.setIcon(QMessageBox::Critical);
+            box.setWindowTitle("Ошибка");
+            box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+            box.exec();
         }
     }
 }
@@ -2336,12 +3285,36 @@ void AdministrationWindow::CheckIMORead()
 
 void AdministrationWindow::FindShipRead()
 {
-    // TODO организовать ввод морского судна в поля с сервера
-
-    // Заглушка просмотра
+    // Флаги проверок
     bool is_correct = this->ui->ship_IMO_read_edit->text().length() == 7;
     bool is_work = true;
     bool is_find = true;
+
+    // Результат работы сервера
+    QString result;
+
+    if (is_correct)
+    {
+
+        is_work = connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            is_work = connection.Send("A11" + this->ui->ship_IMO_read_edit->text());
+
+            if (is_work)
+            {
+                result = connection.Receive();
+
+                is_work = result != "\x18";
+                is_find = result != "\x00";
+            }
+
+            // Удаляем соединение
+            if (connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                connection.Disconnect();
+        }
+    }
 
     // Проверка IMO номера
     if (!is_correct)
@@ -2385,6 +3358,34 @@ void AdministrationWindow::FindShipRead()
         {
             this->ui->ship_choose_read_label->setStyleSheet("color: #00FF00;");
             this->ui->ship_choose_read_label->setText("* Морское судно найдено");
+        }
+    }
+
+    if(is_correct)
+    {
+        if (is_work)
+        {
+            if (is_find)
+            {
+                QStringList list = result.split('\v');
+
+                this->ui->ship_type_read_edit->setText(list[2]);
+                this->ui->ship_name_read_edit->setText(list[3]);
+                this->ui->ship_country_read_edit->setText(list[4]);
+                this->ui->ship_carrying_read_spin->setValue(list[6].toDouble());
+                this->ui->workload_read_spin->setValue(list[7].toDouble());
+                this->ui->ship_status_read_edit->setText(list[5]);
+            }
+        }
+        else
+        {
+            QMessageBox box;
+
+            box.setIcon(QMessageBox::Critical);
+            box.setWindowTitle("Ошибка");
+            box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+            box.exec();
         }
     }
 }
@@ -2437,9 +3438,7 @@ void AdministrationWindow::CheckUserAddForm()
 
 void AdministrationWindow::AddUser()
 {
-    // TODO организовать добавление пользователя на сервере
-
-    // Заглушка отправки
+    // Флаги проверок
     bool is_surname = this->ui->surname_add_edit->text().length() > 0;
     bool is_name = this->ui->name_add_edit->text().length() > 0;
     bool is_username = this->ui->username_add_edit->text().length() >= 12 && this->ui->username_add_edit->text().length() <= 16;
@@ -2447,8 +3446,43 @@ void AdministrationWindow::AddUser()
     bool is_repeat = this->ui->repeat_add_edit->text() == this->ui->password_add_edit->text();
     bool is_username_unic = true;
     bool is_password_unic = true;
-    bool is_correct = is_surname && is_name && is_username && is_password && is_repeat && is_username_unic && is_password_unic;
+    bool is_correct = is_surname && is_name && is_username && is_password && is_repeat;
     bool is_work = true;
+
+    // Результат работы сервера
+    QString result;
+
+    if (is_correct)
+    {
+
+        is_work = connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            QString message = this->ui->surname_add_edit->text() + '\v' +
+                              this->ui->name_add_edit->text() + '\v' +
+                              this->ui->patronym_add_edit->text() + '\v' +
+                              this->ui->job_add_box->currentText() + '\v' +
+                              this->ui->username_add_edit->text() + '\v' +
+                              connection.Encryption(this->ui->password_add_edit->text());
+
+            is_work = connection.Send("A12" + message );
+
+            if (is_work)
+            {
+                result = connection.Receive();
+
+                is_work = result != "\x18";
+                is_username_unic = result != "2";
+                is_password_unic = result != "3";
+                is_correct = is_correct && is_username_unic && is_password_unic;
+            }
+
+            // Удаляем соединение
+            if (connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                connection.Disconnect();
+        }
+    }
 
     // Проверка фамилии
     if (!is_surname)
@@ -2550,6 +3584,20 @@ void AdministrationWindow::AddUser()
         this->ui->user_add_label->setStyleSheet("color: #00FF00;");
         this->ui->user_add_label->setText("* Пользователь добавлен");
     }
+
+    if (is_correct)
+    {
+        if (!is_work)
+        {
+            QMessageBox box;
+
+            box.setIcon(QMessageBox::Critical);
+            box.setWindowTitle("Ошибка");
+            box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+            box.exec();
+        }
+    }
 }
 
 void AdministrationWindow::ClearUserAddForm()
@@ -2638,15 +3686,41 @@ void AdministrationWindow::CheckUserOptionsUpdate()
 
 void AdministrationWindow::FindUserUpdate()
 {
-    // TODO организовать отправку имени пользователя и пароля на сервер
-
-    // Заглушка отправки
+    // Флаги проверок
     bool is_username = this->ui->username_update_edit->text().length() >= 12 && this->ui->username_update_edit->text().length() <= 16;
     bool is_password = this->ui->password_update_edit->text().length() >= 12 && this->ui->password_update_edit->text().length() <= 16;
     bool is_correct = is_username && is_password;
     bool is_work = true;
     bool is_find = true;
     bool is_busy = false;
+
+    // Результат работы сервера
+    QString result;
+
+    if (is_correct)
+    {
+
+        is_work = connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            is_work = connection.Send("A13" + this->ui->username_update_edit->text() + '\v' +
+                                            connection.Encryption(this->ui->password_update_edit->text()));
+
+            if (is_work)
+            {
+                result = connection.Receive();
+
+                is_work = result != "\x18";
+                is_find = result != "\x00";
+                is_busy = result == "\x1A" || this->username == this->ui->username_update_edit->text();
+            }
+
+            // Удаляем соединение
+            if (connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                connection.Disconnect();
+        }
+    }
 
     // Проверка имени пользователя
     if (!is_username)
@@ -2723,6 +3797,35 @@ void AdministrationWindow::FindUserUpdate()
             }
         }
     }
+
+    if (is_correct)
+    {
+        if (is_work)
+        {
+            if (is_find && !is_busy)
+            {
+                QStringList list = result.split('\v');
+
+                this->ui->surname_update_edit->setText(list[1]);
+                this->ui->name_update_edit->setText(list[2]);
+                this->ui->patronym_update_edit->setText(list[3]);
+                this->ui->job_update_box->setCurrentText(list[4]);
+                this->ui->new_username_update_edit->setText(this->ui->username_update_edit->text());
+                this->ui->new_password_update_edit->setText(this->ui->password_update_edit->text());
+                this->ui->repeat_update_edit->setText(this->ui->password_update_edit->text());
+            }
+        }
+        else
+        {
+            QMessageBox box;
+
+            box.setIcon(QMessageBox::Critical);
+            box.setWindowTitle("Ошибка");
+            box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+            box.exec();
+        }
+    }
 }
 
 void AdministrationWindow::CheckUserUpdateForm()
@@ -2762,9 +3865,7 @@ void AdministrationWindow::CheckUserUpdateForm()
 
 void AdministrationWindow::UpdateUser()
 {
-    // TODO организовать изменение пользователя на сервере
-
-    // Заглушка отправки
+    // Флаги проверок
     bool is_surname = this->ui->surname_update_edit->text().length() > 0;
     bool is_name = this->ui->name_update_edit->text().length() > 0;
     bool is_username = this->ui->new_username_update_edit->text().length() >= 12 && this->ui->new_username_update_edit->text().length() <= 16;
@@ -2772,8 +3873,45 @@ void AdministrationWindow::UpdateUser()
     bool is_repeat = this->ui->repeat_update_edit->text() == this->ui->new_password_update_edit->text();
     bool is_username_unic = true;
     bool is_password_unic = true;
-    bool is_correct = is_surname && is_name && is_username && is_password && is_repeat && is_username_unic && is_password_unic;
+    bool is_correct = is_surname && is_name && is_username && is_password && is_repeat;
     bool is_work = true;
+
+    // Результат работы сервера
+    QString result;
+
+    if (is_correct)
+    {
+
+        is_work = connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            QString message = this->ui->surname_update_edit->text() + '\v' +
+                              this->ui->name_update_edit->text() + '\v' +
+                              this->ui->patronym_update_edit->text() + '\v' +
+                              this->ui->job_update_box->currentText() + '\v' +
+                              this->ui->new_username_update_edit->text() + '\v' +
+                              connection.Encryption(this->ui->new_password_update_edit->text()) + '\v' +
+                              this->ui->username_update_edit->text() + '\v' +
+                              connection.Encryption(this->ui->password_update_edit->text());
+
+            is_work = connection.Send("A14" + message );
+
+            if (is_work)
+            {
+                result = connection.Receive();
+
+                is_work = result != "\x18";
+                is_username_unic = result != "2";
+                is_password_unic = result != "3";
+                is_correct = is_correct && is_username_unic && is_password_unic;
+            }
+
+            // Удаляем соединение
+            if (connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                connection.Disconnect();
+        }
+    }
 
     // Проверка фамилии
     if (!is_surname)
@@ -2880,6 +4018,20 @@ void AdministrationWindow::UpdateUser()
         this->ui->password_update_edit->setStyleSheet("background-color: #C5CAE9; color: #000000;");
         this->ui->user_update_label->setStyleSheet("color: #00FF00;");
         this->ui->user_update_label->setText("* Пользователь изменён");
+    }
+
+    if (is_correct)
+    {
+        if (!is_work)
+        {
+            QMessageBox box;
+
+            box.setIcon(QMessageBox::Critical);
+            box.setWindowTitle("Ошибка");
+            box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+            box.exec();
+        }
     }
 }
 
@@ -2999,15 +4151,46 @@ void AdministrationWindow::CheckUserOptionsDelete()
 
 void AdministrationWindow::DeleteUser()
 {
-    // TODO организовать удаление пользователя на сервере
-
-    // Заглушка отправки
+    // Флаги проверок
     bool is_username = this->ui->username_delete_edit->text().length() >= 12 && this->ui->username_delete_edit->text().length() <= 16;
     bool is_password = this->ui->password_delete_edit->text().length() >= 12 && this->ui->password_delete_edit->text().length() <= 16;
     bool is_correct = is_username && is_password;
     bool is_work = true;
     bool is_find = true;
     bool is_busy = false;
+
+    // Результат работы сервера
+    QString result;
+
+    if (is_correct)
+    {
+        if (this->username == this->ui->username_delete_edit->text())
+            is_busy = true;
+        else
+        {
+
+            is_work = connection.Connect(this->host, 8081);
+
+            if (is_work)
+            {
+                is_work = connection.Send("A15" + this->ui->username_delete_edit->text() + '\v' +
+                                                connection.Encryption(this->ui->password_delete_edit->text()));
+
+                if (is_work)
+                {
+                    result = connection.Receive();
+
+                    is_work = result != "\x18";
+                    is_find = result != "\x00";
+                    is_busy = result == "\x1A";
+                }
+
+                // Удаляем соединение
+                if (connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                    connection.Disconnect();
+            }
+        }
+    }
 
     // Проверка имени пользователя
     if (!is_username)
@@ -3089,4 +4272,27 @@ void AdministrationWindow::DeleteUser()
             }
         }
     }
+
+    if (is_correct)
+    {
+        if (!is_work)
+        {
+            QMessageBox box;
+
+            box.setIcon(QMessageBox::Critical);
+            box.setWindowTitle("Ошибка");
+            box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+            box.exec();
+        }
+    }
+}
+
+void AdministrationWindow::closeEvent(QCloseEvent *event)
+{
+    this->ui->bid_id_update_edit->clear();
+
+    QCoreApplication::processEvents();
+
+    event->accept();
 }

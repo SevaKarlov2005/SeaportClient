@@ -212,6 +212,24 @@ QTabWidget QTabBar::tab:disabled
 {
     background-color: #BBBBBB;
     color: black;
+}
+
+
+QTableView::item
+{
+    background-color: #C5CAE9;
+    color: #000000;
+}
+
+QTableView::item:selected
+{
+    background-color: #5c6bc0;
+    color: #FFFFFF;
+}
+
+QTableView &gt; QWidget
+{
+    background-color: #C5CAE9;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -5717,7 +5735,7 @@ QTabWidget QTabBar::tab:disabled
        <bool>false</bool>
       </attribute>
       <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>224</number>
+       <number>218</number>
       </attribute>
      </widget>
      <widget class="QWidget" name="horizontalLayoutWidget_7">
@@ -5732,6 +5750,9 @@ QTabWidget QTabBar::tab:disabled
       <layout class="QHBoxLayout" name="horizontalLayout_129">
        <item>
         <widget class="QPushButton" name="bid_left_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -5751,6 +5772,9 @@ QTabWidget QTabBar::tab:disabled
        </item>
        <item>
         <widget class="QPushButton" name="bid_right_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -6052,6 +6076,9 @@ QTabWidget QTabBar::tab:disabled
       <layout class="QHBoxLayout" name="horizontalLayout_130">
        <item>
         <widget class="QPushButton" name="case_left_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -6071,6 +6098,9 @@ QTabWidget QTabBar::tab:disabled
        </item>
        <item>
         <widget class="QPushButton" name="case_right_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -6454,6 +6484,9 @@ QTabWidget QTabBar::tab:disabled
       <layout class="QHBoxLayout" name="horizontalLayout_131">
        <item>
         <widget class="QPushButton" name="ship_left_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -6473,6 +6506,9 @@ QTabWidget QTabBar::tab:disabled
        </item>
        <item>
         <widget class="QPushButton" name="ship_right_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
