@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QStandardItemModel>
+#include <QCloseEvent>
+#include "tcpserverconnection.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -15,9 +17,25 @@ class StorageWindow : public QMainWindow
     Q_OBJECT
 private:
     Ui::StorageWindow *ui;
+    QStandardItemModel* bid_model;
+    QStandardItemModel* case_model;
     QStandardItemModel* case_assigned_model;
+    int bid_page;
+    int case_page;
+    int case_assigned_page;
+    QString host;
+    QString username;
+    QString bid_number;
+    QString bid_status;
+    QString TN_VED;
+    QString case_code;
+    QString case_rig;
+    QString case_item;
+    QString case_number;
+    QString case_status;
+    TCPServerConnection connection;
 public:
-    explicit StorageWindow(QWidget *parent = nullptr);
+    explicit StorageWindow(QString surname, QString name, QString patronym, QString username, QWidget *parent = nullptr);
     ~StorageWindow();
     void CheckBidIdWork();
     void FindBidWork();
@@ -31,6 +49,9 @@ public:
     void ActivateBidWorkForm(bool flag, unsigned short mod);
     void AssignCase();
     void ReturnCase();
+    void BidList();
+    void CaseList();
+    void NominatedCaseList();
     void CheckBidIdRead();
     void FindBidRead();
     void ClearBidReadForm();
@@ -50,6 +71,7 @@ public:
     void ActivateCaseUpdateForm(bool flag);
     void DeleteCaseByOptions();
     void DeleteCaseByBid();
+    void closeEvent(QCloseEvent* event) override;
 };
 
 #endif // STORAGEWINDOW_H

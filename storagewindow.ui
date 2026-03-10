@@ -1815,8 +1815,8 @@ QTableView &gt; QWidget
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1009</width>
-         <height>639</height>
+         <width>992</width>
+         <height>642</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1849,13 +1849,13 @@ QTableView &gt; QWidget
             <property name="minimumSize">
              <size>
               <width>900</width>
-              <height>280</height>
+              <height>288</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>900</width>
-              <height>280</height>
+              <height>288</height>
              </size>
             </property>
             <property name="font">
@@ -1880,6 +1880,9 @@ QTableView &gt; QWidget
          <layout class="QHBoxLayout" name="horizontalLayout_130">
           <item>
            <widget class="QPushButton" name="case_assigned_left_button">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -1905,6 +1908,9 @@ QTableView &gt; QWidget
           </item>
           <item>
            <widget class="QPushButton" name="case_assigned_right_button">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -2261,6 +2267,9 @@ QTableView &gt; QWidget
       <layout class="QHBoxLayout" name="horizontalLayout_129">
        <item>
         <widget class="QPushButton" name="bid_left_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -2280,6 +2289,9 @@ QTableView &gt; QWidget
        </item>
        <item>
         <widget class="QPushButton" name="bid_right_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -2401,7 +2413,7 @@ QTableView &gt; QWidget
         </widget>
        </item>
        <item row="1" column="3">
-        <widget class="QComboBox" name="bid_status_box">
+        <widget class="QComboBox" name="bid_status_filter_box">
          <property name="minimumSize">
           <size>
            <width>220</width>
@@ -2556,6 +2568,9 @@ QTableView &gt; QWidget
       <layout class="QHBoxLayout" name="horizontalLayout_131">
        <item>
         <widget class="QPushButton" name="case_left_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -2575,6 +2590,9 @@ QTableView &gt; QWidget
        </item>
        <item>
         <widget class="QPushButton" name="case_right_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -2964,7 +2982,7 @@ QTableView &gt; QWidget
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
+         <y>-879</y>
          <width>1002</width>
          <height>2032</height>
         </rect>
