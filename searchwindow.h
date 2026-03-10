@@ -2,6 +2,9 @@
 #define SEARCHWINDOW_H
 
 #include <QMainWindow>
+#include <QStandardItemModel>
+#include <QCloseEvent>
+#include "tcpserverconnection.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -14,8 +17,15 @@ class SearchWindow : public QMainWindow
     Q_OBJECT
 private:
     Ui::SearchWindow *ui;
+    QStandardItemModel* bid_model;
+    int bid_page;
+    QString host;
+    QString username;
+    QString bid_number;
+    QString bid_status;
+    TCPServerConnection connection;
 public:
-    explicit SearchWindow(QWidget *parent = nullptr);
+    explicit SearchWindow(QString surname, QString name, QString patronym, QString username, QWidget *parent = nullptr);
     ~SearchWindow();
     void CheckBidIdWork();
     void FindBidWork();
@@ -25,9 +35,11 @@ public:
     void Reception();
     void ClearBidWorkForm(unsigned short mod);
     void ActivateBidWorkForm(bool flag, unsigned short mod);
+    void BidList();
     void CheckBidIdRead();
     void FindBidRead();
     void ClearBidReadForm();
+    void closeEvent(QCloseEvent* event) override;
 };
 
 #endif // SEARCHWINDOW_H

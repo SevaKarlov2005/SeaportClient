@@ -173,6 +173,24 @@ QTabWidget QTabBar::tab:disabled
 {
     background-color: #BBBBBB;
     color: black;
+}
+
+
+QTableView::item
+{
+    background-color: #C5CAE9;
+    color: #000000;
+}
+
+QTableView::item:selected
+{
+    background-color: #5c6bc0;
+    color: #FFFFFF;
+}
+
+QTableView &gt; QWidget
+{
+    background-color: #C5CAE9;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -1049,6 +1067,9 @@ QTabWidget QTabBar::tab:disabled
       <layout class="QHBoxLayout" name="horizontalLayout_240">
        <item>
         <widget class="QPushButton" name="bid_left_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -1068,6 +1089,9 @@ QTabWidget QTabBar::tab:disabled
        </item>
        <item>
         <widget class="QPushButton" name="bid_right_button">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
