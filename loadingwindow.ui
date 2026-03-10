@@ -212,6 +212,23 @@ QTabWidget QTabBar::tab:disabled
 {
     background-color: #BBBBBB;
     color: black;
+}
+
+QTableView::item
+{
+    background-color: #C5CAE9;
+    color: #000000;
+}
+
+QTableView::item:selected
+{
+    background-color: #5c6bc0;
+    color: #FFFFFF;
+}
+
+QTableView &gt; QWidget
+{
+    background-color: #C5CAE9;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -2845,7 +2862,7 @@ QTabWidget QTabBar::tab:disabled
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
+         <y>-751</y>
          <width>1002</width>
          <height>2032</height>
         </rect>
@@ -6002,6 +6019,11 @@ QTabWidget QTabBar::tab:disabled
               <height>16777215</height>
              </size>
             </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
             <property name="readOnly">
              <bool>true</bool>
             </property>
@@ -6066,7 +6088,7 @@ QTabWidget QTabBar::tab:disabled
          <x>0</x>
          <y>0</y>
          <width>1002</width>
-         <height>634</height>
+         <height>1634</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -6252,14 +6274,14 @@ QTabWidget QTabBar::tab:disabled
          <widget class="QLabel" name="schema_label">
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>400</height>
+            <width>980</width>
+            <height>1400</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
-            <height>400</height>
+            <width>980</width>
+            <height>1400</height>
            </size>
           </property>
           <property name="baseSize">

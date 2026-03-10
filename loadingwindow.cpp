@@ -2,8 +2,10 @@
 #include "ui_loadingwindow.h"
 
 #include <QRegularExpressionValidator>
+#include <QMessageBox>
+#include <QPainter>
 
-LoadingWindow::LoadingWindow(QWidget *parent) : QMainWindow(parent)
+LoadingWindow::LoadingWindow(QString surname, QString name, QString patronym, QString username, QWidget *parent) : QMainWindow(parent)
 {
     // Установка интерфейса окна
     this->ui = new Ui::LoadingWindow;
@@ -11,6 +13,30 @@ LoadingWindow::LoadingWindow(QWidget *parent) : QMainWindow(parent)
 
     // Установка фиксированного размера окна
     setFixedSize(1045, 855);
+
+    // Удаление окна при закрытии
+    setAttribute(Qt::WA_DeleteOnClose);
+
+    // Отображение ФИО
+    this->ui->surname_label->setText("Фамилия: " + surname);
+    this->ui->name_label->setText("Имя: " + name);
+    this->ui->patronym_label->setText("Отчество: " + patronym);
+
+    // Установка хоста и имени пользователя
+    this->host = "10.240.138.246";
+    this->username = username;
+
+    // Инициализация таблицы контейнеров
+    this->case_page = 1;
+
+    this->case_model = new QStandardItemModel(0, 5);
+    this->case_model->setHeaderData(0, Qt::Horizontal, "Код\nвладельца");
+    this->case_model->setHeaderData(1, Qt::Horizontal, "Идентификатор\nкатегории\nоборудования");
+    this->case_model->setHeaderData(2, Qt::Horizontal, "Серийный\nномер");
+    this->case_model->setHeaderData(3, Qt::Horizontal, "Контрольное\nчисло");
+    this->case_model->setHeaderData(4, Qt::Horizontal, "Статус");
+    this->ui->case_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    this->ui->case_table->setModel(this->case_model);
 
     // Регулярные выражения для валидаторов
     QRegularExpression code_pattern(R"([A-Z]{3})");
@@ -49,6 +75,16 @@ LoadingWindow::LoadingWindow(QWidget *parent) : QMainWindow(parent)
     connect(this->ui->check_false_radio, &QRadioButton::clicked, this, &LoadingWindow::CheckResult);
     connect(this->ui->reception_work_button, &QPushButton::clicked, this, &LoadingWindow::Reception);
 
+    // Установка связей между сигналами и методами для пагинации контейнеров
+    connect(this->ui->code_filter_edit, &QLineEdit::textChanged, this, &LoadingWindow::CaseList);
+    connect(this->ui->rig_filter_box, &QComboBox::currentIndexChanged, this, &LoadingWindow::CaseList);
+    connect(this->ui->item_filter_edit, &QLineEdit::textChanged, this, &LoadingWindow::CaseList);
+    connect(this->ui->number_filter_edit, &QLineEdit::textChanged, this, &LoadingWindow::CaseList);
+    connect(this->ui->status_filter_box, &QComboBox::currentIndexChanged, this, &LoadingWindow::CaseList);
+    connect(this->ui->left_button, &QPushButton::clicked, this, [this](){ this->case_page--; CaseList(); });
+    connect(this->ui->right_button, &QPushButton::clicked, this, [this](){ this->case_page++; CaseList(); });
+    connect(this->ui->case_table->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &LoadingWindow::CaseList);
+
     // Установка связей между сигналами и методами для просмотра контейнера
     connect(this->ui->code_read_edit, &QLineEdit::textChanged, this, &LoadingWindow::CheckCaseOptionsRead);
     connect(this->ui->rig_read_box, &QComboBox::currentIndexChanged, this, &LoadingWindow::CheckCaseOptionsRead);
@@ -59,16 +95,61 @@ LoadingWindow::LoadingWindow(QWidget *parent) : QMainWindow(parent)
     // Установка связей между сигналами и методами для просмотра заявки
     connect(this->ui->bid_id_read_edit, &QLineEdit::textChanged, this, &LoadingWindow::CheckBidIdRead);
     connect(this->ui->bid_choose_read_button, &QPushButton::clicked, this, &LoadingWindow::FindBidRead);
+
+    // Заполнение таблиц
+    CaseList();
 }
 
 LoadingWindow::~LoadingWindow()
 {
+    this->connection.Disconnect();
     delete this->ui;
 }
 
 void LoadingWindow::CheckCaseOptionsWork()
 {
-    // TODO организовать освобождение контейнера на сервере
+    // Флаги проверок
+    bool is_work = true;
+
+    // Результат работы сервера
+    QString result;
+
+    if (this->case_code.length() == 3)
+    {
+        is_work = this->connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            QString message = "L00"+
+                              this->case_status + '\v' +
+                              this->case_code + '\v' +
+                              this->case_rig + '\v' +
+                              this->case_item + '\v' +
+                              this->case_number;
+
+            is_work = this->connection.Send(message);
+
+            if (is_work)
+            {
+                result = this->connection.Receive();
+
+                is_work = result != "\x18";
+
+                if (is_work)
+                {
+                    this->case_status = "";
+                    this->case_code = "";
+                    this->case_rig = "";
+                    this->case_item = "";
+                    this->case_number = "";
+                }
+            }
+
+            // Удаляем соединение
+            if (this->connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                this->connection.Disconnect();
+        }
+    }
 
     ClearCaseWorkForm(0x7);
     ActivateCaseWorkForm(false, 0x7);
@@ -78,9 +159,7 @@ void LoadingWindow::CheckCaseOptionsWork()
 
 void LoadingWindow::FindCaseWork()
 {
-    // TODO организовать поиск контейнера на сервере и вывод информации в "Схема погрузки"
-
-    // Заглушка поиска
+    // Флаги проверок
     bool is_code = this->ui->code_work_edit->text().length() == 3;
     bool is_item = this->ui->item_work_edit->text().length() == 6;
     bool is_number = this->ui->number_work_edit->text().length() == 1;
@@ -88,6 +167,39 @@ void LoadingWindow::FindCaseWork()
     bool is_work = true;
     bool is_find = true;
     bool is_busy = false;
+
+    // Результат работы сервера
+    QString result;
+
+    if (is_correct)
+    {
+        is_work = this->connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            QString message = "L01" +
+                              this->username + '\v' +
+                              this->ui->code_work_edit->text() + '\v' +
+                              this->ui->rig_work_box->currentText() + '\v' +
+                              this->ui->item_work_edit->text() + '\v' +
+                              this->ui->number_work_edit->text();
+
+            is_work = this->connection.Send(message);
+
+            if (is_work)
+            {
+                result = this->connection.Receive();
+
+                is_work = result != "\x18";
+                is_find = result != "\x00";
+                is_busy = result == "\x1A";
+            }
+
+            // Удаляем соединение
+            if (this->connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                this->connection.Disconnect();
+        }
+    }
 
     // Проверка кода владельца
     if (!is_code)
@@ -197,6 +309,72 @@ void LoadingWindow::FindCaseWork()
             }
         }
     }
+
+    if (is_correct)
+    {
+        if (is_work)
+        {
+            if (is_find && !is_busy)
+            {
+                QStringList list = result.split('\v');
+
+                this->case_status = list[13];
+                this->case_code = this->ui->code_work_edit->text();
+                this->case_rig = this->ui->rig_work_box->currentText();
+                this->case_item = this->ui->item_work_edit->text();
+                this->case_number = this->ui->number_work_edit->text();
+
+                this->ui->designated_position_edit->setText(list[12]);
+                this->ui->designated_ship_edit->setText(list[14]);
+
+                QPixmap pixmap(980, 1400);
+                pixmap.fill(Qt::white);
+
+                QPainter painter(&pixmap);
+
+                QString alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+                int cell_size = 50;
+                int x = 240;
+                int y = 50;
+
+                painter.setPen(QPen(Qt::gray, 1));
+
+                for (int row = 0; row < 26; row++)
+                {
+                    for (int col = 0; col < 10; col++)
+                    {
+                        QRect cell(x + col * cell_size,
+                                   y + row * cell_size,
+                                   cell_size - 2, cell_size - 2);
+
+                        QString pos = alphabet[row] + QString::number(col).rightJustified(2, '0');
+
+                        if (pos == this->ui->designated_position_edit->text())
+                            painter.fillRect(cell, QColor(144, 238, 144));
+
+                        painter.setPen(QPen(Qt::gray, 1));
+                        painter.drawRect(cell);
+                        painter.setPen(Qt::black);
+                        painter.drawText(cell, Qt::AlignCenter, pos);
+                        painter.setPen(QPen(Qt::gray, 1));
+                    }
+                }
+
+                this->ui->schema_label->setPixmap(pixmap);
+            }
+        }
+        else
+        {
+            QMessageBox box;
+
+            box.setIcon(QMessageBox::Critical);
+            box.setWindowTitle("Ошибка");
+            box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+            box.exec();
+        }
+    }
 }
 
 void LoadingWindow::CheckResult()
@@ -216,8 +394,6 @@ void LoadingWindow::CheckResult()
 
 void LoadingWindow::Reception()
 {
-    // TODO изменение статуса контейнера на сервере
-
     // Установка разрешённых символов в комментарии
     QString grant_symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
                             "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
@@ -226,9 +402,12 @@ void LoadingWindow::Reception()
                             "@#$%^&*() _+={}[]|\\;:\"'<>,.?/~-";
     QString comment = this->ui->comment_work_edit->toPlainText();
 
-    // Заглушка
+    // Флаги проверок
     bool is_correct = true;
     bool is_work = true;
+
+    //
+    QString result;
 
     // Проверка комментария
     for (int i = 0; i < comment.length(); i++)
@@ -237,6 +416,44 @@ void LoadingWindow::Reception()
         {
             is_correct = false;
             break;
+        }
+    }
+
+    if (is_correct)
+    {
+        is_work = connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            QString message = "L02" +
+                              comment + '\v' +
+                              (this->ui->check_true_radio->isChecked() ? "Погружен" : "Не погружен") + '\v' +
+                              this->case_code + '\v' +
+                              this->case_rig + '\v' +
+                              this->case_item + '\v' +
+                              this->case_number;
+
+            is_work = connection.Send(message);
+
+            if (is_work)
+            {
+                result = connection.Receive();
+
+                is_work = result != "\x18";
+
+                if (result == "1")
+                {
+                    this->case_code = "";
+                    this->case_rig = "";
+                    this->case_item = "";
+                    this->case_number = "";
+                    this->case_status = "";
+                }
+            }
+
+            // Удаляем соединение
+            if (connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                connection.Disconnect();
         }
     }
 
@@ -261,6 +478,20 @@ void LoadingWindow::Reception()
         this->ui->number_work_edit->clear();
         this->ui->reception_work_label->setStyleSheet("color: #00FF00;");
         this->ui->reception_work_label->setText("* Результат отправлен");
+    }
+
+    if (is_correct)
+    {
+        if (!is_work)
+        {
+            QMessageBox box;
+
+            box.setIcon(QMessageBox::Critical);
+            box.setWindowTitle("Ошибка");
+            box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+            box.exec();
+        }
     }
 }
 
@@ -338,6 +569,135 @@ void LoadingWindow::ActivateCaseWorkForm(bool flag, unsigned short mod)
     }
 }
 
+void LoadingWindow::CaseList()
+{
+    if ((this->ui->code_filter_edit->text().length() == 3 || this->ui->code_filter_edit->text() == "") &&
+        (this->ui->item_filter_edit->text().length() == 6 || this->ui->item_filter_edit->text() == "") &&
+        (this->ui->number_filter_edit->text().length() == 1 || this->ui->number_filter_edit->text() == ""))
+    {
+        QString message = "L03";
+
+        int section =  this->ui->case_table->horizontalHeader()->sortIndicatorSection();
+        Qt::SortOrder order = this->ui->case_table->horizontalHeader()->sortIndicatorOrder();
+
+        if (section == 0)
+            message += "c.owner_code";
+        else if (section == 1)
+            message += "e.equipment_type";
+        else if (section == 2)
+            message += "c.serial_number";
+        else if (section == 3)
+            message += "c.check_number";
+        else if (section == 4)
+            message += "s.container_status";
+
+        if (order == Qt::AscendingOrder)
+            message += "\vASC";
+        else
+            message += "\vDESC";
+
+        message += ('\v' +QString::number(this->case_page));
+
+        message += ("\v11");
+
+        if (this->ui->code_filter_edit->text().length() == 3)
+            message += ('\v' + this->ui->code_filter_edit->text());
+        else
+            message += '\v';
+
+        message += ('\v' + this->ui->rig_filter_box->currentText());
+
+        if (this->ui->item_filter_edit->text().length() == 6)
+            message += ('\v' + this->ui->item_filter_edit->text());
+        else
+            message += '\v';
+
+        if (this->ui->number_filter_edit->text().length() == 1)
+            message += ('\v' + this->ui->number_filter_edit->text());
+        else
+            message += '\v';
+
+        message += ('\v' + this->ui->status_filter_box->currentText());
+
+        bool is_work = true;
+        bool is_find = true;
+        QString result;
+
+
+        is_work = connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            is_work = connection.Send(message);
+
+            if (is_work)
+            {
+                result = connection.Receive();
+
+                is_find = result != "\x00";
+                is_work = result != "\x18";
+
+                if (is_work && is_find)
+                {
+                    QStringList fields = result.split('\v');
+
+                    this->case_page = fields[fields.length() - 2].toInt();
+
+                    if (this->case_page == 1)
+                        this->ui->left_button->setEnabled(false);
+                    else
+                        this->ui->left_button->setEnabled(true);
+
+                    if (fields[fields.length() - 1] == "1")
+                        this->ui->right_button->setEnabled(true);
+                    else
+                        this->ui->right_button->setEnabled(false);
+
+                    this->case_model->removeRows(0, this->case_model->rowCount());
+
+                    for (int i = 0; i < (fields.length() - 2); i += 5)
+                    {
+                        this->case_model->insertRow(this->case_model->rowCount());
+
+                        this->case_model->setData(this->case_model->index(i / 5, 0), fields[i]);
+                        this->case_model->setData(this->case_model->index(i / 5, 1), fields[i + 1]);
+                        this->case_model->setData(this->case_model->index(i / 5, 2), fields[i + 2]);
+                        this->case_model->setData(this->case_model->index(i / 5, 3), fields[i + 3]);
+                        this->case_model->setData(this->case_model->index(i / 5, 4), fields[i + 4]);
+                    }
+
+                    this->ui->case_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+                }
+            }
+
+            // Удаляем соединение
+            if (connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                connection.Disconnect();
+
+            if (!is_work || !is_find)
+            {
+                this->ui->left_button->setEnabled(false);
+                this->ui->right_button->setEnabled(false);
+
+                this->case_model->removeRows(0, this->case_model->rowCount());
+                this->ui->case_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+                this->case_page = 1;
+            }
+        }
+    }
+    else
+    {
+        this->ui->left_button->setEnabled(false);
+        this->ui->right_button->setEnabled(false);
+
+        this->case_model->removeRows(0, this->case_model->rowCount());
+        this->ui->case_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+        this->case_page = 1;
+    }
+}
+
 void LoadingWindow::CheckCaseOptionsRead()
 {
     ClearCaseReadForm();
@@ -347,15 +707,42 @@ void LoadingWindow::CheckCaseOptionsRead()
 
 void LoadingWindow::FindCaseRead()
 {
-    // TODO организовать ввод контейнера в поля с сервера
-
-    // Заглушка просмотра
+    // Флаги проверок
     bool is_code = this->ui->code_read_edit->text().length() == 3;
     bool is_item = this->ui->item_read_edit->text().length() == 6;
     bool is_number = this->ui->number_read_edit->text().length() == 1;
     bool is_correct = is_code && is_item && is_number;
     bool is_work = true;
     bool is_find = true;
+
+    // Результат работы сервера
+    QString result;
+
+    if (is_correct)
+    {
+
+        is_work = connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            is_work = connection.Send("L04" + this->ui->code_read_edit->text() + '\v' +
+                                      this->ui->rig_read_box->currentText() + '\v' +
+                                      this->ui->item_read_edit->text() + '\v' +
+                                      this->ui->number_read_edit->text());
+
+            if (is_work)
+            {
+                result = connection.Receive();
+
+                is_work = result != "\x18";
+                is_find = result != "\x00";
+            }
+
+            // Удаляем соединение
+            if (connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                connection.Disconnect();
+        }
+    }
 
     // Проверка кода владельца
     if (!is_code)
@@ -456,6 +843,39 @@ void LoadingWindow::FindCaseRead()
             this->ui->case_choose_read_label->setText("* Контейнер найден");
         }
     }
+
+    if (is_correct)
+    {
+        if (is_work)
+        {
+            if (is_find)
+            {
+                QStringList list = result.split('\v');
+
+                this->ui->country_read_edit->setText(list[5]);
+                this->ui->size_read_edit->setText(list[6]);
+                this->ui->case_type_read_edit->setText(list[7]);
+                this->ui->gross_read_spin->setValue(list[8].toDouble());
+                this->ui->tare_weight_read_spin->setValue(list[9].toDouble());
+                this->ui->carrying_read_spin->setValue(list[10].toDouble());
+                this->ui->capacity_read_spin->setValue(list[11].toDouble());
+                this->ui->IMO_read_edit->setText(list[14]);
+                this->ui->position_read_edit->setText(list[12]);
+                this->ui->claim_read_edit->setText(list[15]);
+                this->ui->case_status_read_edit->setText(list[13]);
+            }
+        }
+        else
+        {
+            QMessageBox box;
+
+            box.setIcon(QMessageBox::Critical);
+            box.setWindowTitle("Ошибка");
+            box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+            box.exec();
+        }
+    }
 }
 
 void LoadingWindow::ClearCaseReadForm()
@@ -483,12 +903,36 @@ void LoadingWindow::CheckBidIdRead()
 
 void LoadingWindow::FindBidRead()
 {
-    // TODO организовать ввод заявки в поля с сервера
-
-    // Заглушка просмотра
+    // Флаги проверок
     bool is_correct = this->ui->bid_id_read_edit->text().length() == 14;
     bool is_work = true;
     bool is_find = true;
+
+    // Результат работы сервера
+    QString result;
+
+    if (is_correct)
+    {
+
+        is_work = connection.Connect(this->host, 8081);
+
+        if (is_work)
+        {
+            is_work = connection.Send("L05" + this->ui->bid_id_read_edit->text());
+
+            if (is_work)
+            {
+                result = connection.Receive();
+
+                is_work = result != "\x18";
+                is_find = result != "\x00";
+            }
+
+            // Удаляем соединение
+            if (connection.CheckConnectionState() == QAbstractSocket::ConnectedState)
+                connection.Disconnect();
+        }
+    }
 
     // Проверка идентификатора заявки
     if (!is_correct)
@@ -537,6 +981,59 @@ void LoadingWindow::FindBidRead()
             this->ui->bid_choose_read_label->setText("* Заявка найдена");
         }
     }
+
+    if (is_correct)
+    {
+        if (is_work)
+        {
+            if (is_find)
+            {
+                QStringList list = result.split('\v');
+
+                this->ui->organization_read_edit->setText(list[2]);
+                this->ui->INN_read_edit->setText(list[3]);
+                this->ui->phone_read_edit->setText(list[4]);
+                this->ui->mail_read_edit->setText(list[5]);
+                this->ui->cargo_read_edit->setText(list[6]);
+                this->ui->TNVED_read_edit->setText(list[7]);
+                this->ui->direction_read_edit->setText(list[8]);
+                this->ui->length_read_spin->setValue(list[9].toDouble());
+                this->ui->width_read_spin->setValue(list[10].toDouble());
+                this->ui->height_read_spin->setValue(list[11].toDouble());
+                this->ui->weight_read_spin->setValue(list[12].toDouble());
+                this->ui->package_read_edit->setText(list[13]);
+                this->ui->feature_read_edit->setText(list[14]);
+                this->ui->quantity_read_spin->setValue(list[15].toInt());
+                this->ui->traffic_in_read_edit->setText(list[16]);
+                this->ui->traffic_out_read_edit->setText(list[17]);
+                this->ui->date_in_read_date->setDate(QDate::fromString(list[18], "yyyy-MM-dd").addYears(-100));
+                this->ui->date_out_read_date->setDate(QDate::fromString(list[19], "yyyy-MM-dd").addYears(-100));
+                this->ui->storage_read_edit->setText(list[20]);
+                this->ui->term_read_spin->setValue(list[21].toInt());
+                this->ui->demand_read_edit->setText(list[22]);
+                this->ui->producer_read_edit->setText(list[23]);
+                this->ui->sender_read_edit->setText(list[24]);
+                this->ui->port_from_read_edit->setText(list[25]);
+                this->ui->country_from_read_edit->setText(list[26]);
+                this->ui->port_to_read_edit->setText(list[27]);
+                this->ui->country_to_read_edit->setText(list[28]);
+                this->ui->receiver_read_edit->setText(list[29]);
+                this->ui->other_read_edit->setText(list[30]);
+                this->ui->comment_read_edit->setText(list[31]);
+                this->ui->bid_status_read_edit->setText(list[32]);
+            }
+        }
+        else
+        {
+            QMessageBox box;
+
+            box.setIcon(QMessageBox::Critical);
+            box.setWindowTitle("Ошибка");
+            box.setText("Произошёл сбой на сервере. Свяжитесь с технической поддержкой для устранения неполадки.");
+
+            box.exec();
+        }
+    }
 }
 
 void LoadingWindow::ClearBidReadForm()
@@ -573,4 +1070,13 @@ void LoadingWindow::ClearBidReadForm()
     this->ui->other_read_edit->clear();
     this->ui->comment_read_edit->clear();
     this->ui->bid_status_read_edit->clear();
+}
+
+void LoadingWindow::closeEvent(QCloseEvent* event)
+{
+    this->ui->code_work_edit->clear();
+
+    QCoreApplication::processEvents();
+
+    event->accept();
 }
