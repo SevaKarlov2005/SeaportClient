@@ -19,6 +19,7 @@ private:
     Ui::SearchWindow *ui;
     QStandardItemModel* bid_model;
     int bid_page;
+    int bid_read_page;
     QString host;
     QString username;
     QString bid_number;
@@ -38,6 +39,7 @@ public:
     void BidList();
     void CheckBidIdRead();
     void FindBidRead();
+    void ChooseBidReadPage();
     void ClearBidReadForm();
     void closeEvent(QCloseEvent* event) override;
 };

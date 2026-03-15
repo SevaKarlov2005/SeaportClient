@@ -60,6 +60,12 @@ StorageWindow::StorageWindow(QString surname, QString name, QString patronym, QS
     this->ui->case_assigned_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     this->ui->case_assigned_table->setModel(this->case_assigned_model);
 
+    // Установка страниц форм
+    this->bid_read_page = 1;
+    this->case_add_page = 1;
+    this->case_update_page = 1;
+    this->case_read_page = 1;
+
     // Регулярные выражения для валидаторов
     QRegularExpression bid_id_pattern(R"([0-9]{5}-[0-9]{2}/ОМиДР)");
     QRegularExpression code_pattern(R"([A-Z]{3})");
@@ -163,12 +169,20 @@ StorageWindow::StorageWindow(QString surname, QString name, QString patronym, QS
     connect(this->ui->bid_id_read_edit, &QLineEdit::textChanged, this, &StorageWindow::CheckBidIdRead);
     connect(this->ui->bid_choose_read_button, &QPushButton::clicked, this, &StorageWindow::FindBidRead);
 
+    // Пагинация формы просмотра заявки
+    connect(this->ui->bid_read_left_button, &QPushButton::clicked, this, [this](){ this->bid_read_page--; ChooseBidReadPage(); });
+    connect(this->ui->bid_read_right_button, &QPushButton::clicked, this, [this](){ this->bid_read_page++; ChooseBidReadPage(); });
+
     // Установка связей между сигналами и методами для просмотра контейнера
     connect(this->ui->code_read_edit, &QLineEdit::textChanged, this, &StorageWindow::CheckCaseOptionsRead);
     connect(this->ui->rig_read_box, &QComboBox::currentIndexChanged, this, &StorageWindow::CheckCaseOptionsRead);
     connect(this->ui->item_read_edit, &QLineEdit::textChanged, this, &StorageWindow::CheckCaseOptionsRead);
     connect(this->ui->number_read_edit, &QLineEdit::textChanged, this, &StorageWindow::CheckCaseOptionsRead);
     connect(this->ui->case_choose_read_button, &QPushButton::clicked, this, &StorageWindow::FindCaseRead);
+
+    // Пагинация формы просмотра контейнера
+    connect(this->ui->case_read_left_button, &QPushButton::clicked, this, [this](){ this->case_read_page--; ChooseCaseReadPage(); });
+    connect(this->ui->case_read_right_button, &QPushButton::clicked, this, [this](){ this->case_read_page++; ChooseCaseReadPage(); });
 
     // Установка связей между сигналами и методами для добавления контейнера
     connect(this->ui->code_add_edit, &QLineEdit::textChanged, this, &StorageWindow::CheckCaseAddForm);
@@ -184,6 +198,10 @@ StorageWindow::StorageWindow(QString surname, QString name, QString patronym, QS
     connect(this->ui->capacity_add_spin, &QDoubleSpinBox::valueChanged, this, &StorageWindow::CheckCaseAddForm);
     connect(this->ui->case_check_add_button, &QPushButton::clicked, this, &StorageWindow::CheckCaseAddContents);
     connect(this->ui->case_add_button, &QPushButton::clicked, this, &StorageWindow::AddCase);
+
+    // Пагинация формы добавления контейнера
+    connect(this->ui->case_add_left_button, &QPushButton::clicked, this, [this](){ this->case_add_page--; ChooseCaseAddPage(); });
+    connect(this->ui->case_add_right_button, &QPushButton::clicked, this, [this](){ this->case_add_page++; ChooseCaseAddPage(); });
 
     // Установка связей между сигналами и методами для изменения контейнера
     connect(this->ui->code_update_edit, &QLineEdit::textChanged, this, &StorageWindow::CheckCaseOptionsUpdate);
@@ -205,6 +223,10 @@ StorageWindow::StorageWindow(QString surname, QString name, QString patronym, QS
     connect(this->ui->case_check_update_button, &QPushButton::clicked, this, &StorageWindow::CheckCaseUpdateContents);
     connect(this->ui->case_update_button, &QPushButton::clicked, this, &StorageWindow::UpdateCase);
 
+    // Пагинация формы изменения контейнера
+    connect(this->ui->case_update_left_button, &QPushButton::clicked, this, [this](){ this->case_update_page--; ChooseCaseUpdatePage(); });
+    connect(this->ui->case_update_right_button, &QPushButton::clicked, this, [this](){ this->case_update_page++; ChooseCaseUpdatePage(); });
+
     // Установка связей между сигналами и методами для удаления контейнера
     connect(this->ui->code_delete_edit, &QLineEdit::textChanged, this->ui->case_delete_label, &QLabel::clear);
     connect(this->ui->rig_delete_box, &QComboBox::currentIndexChanged, this->ui->case_delete_label, &QLabel::clear);
@@ -217,6 +239,14 @@ StorageWindow::StorageWindow(QString surname, QString name, QString patronym, QS
     // Заполнение таблиц
     BidList();
     CaseList();
+
+    ChooseBidReadPage();
+    ChooseCaseAddPage();
+
+    ChooseCaseUpdatePage();
+    this->ui->case_update_right_button->setEnabled(false);
+
+    ChooseCaseReadPage();
 }
 
 StorageWindow::~StorageWindow()
@@ -1771,6 +1801,175 @@ void StorageWindow::FindBidRead()
     }
 }
 
+void StorageWindow::ChooseBidReadPage()
+{
+    this->ui->organization_read_edit->setVisible(false);
+    this->ui->INN_read_edit->setVisible(false);
+    this->ui->phone_read_edit->setVisible(false);
+    this->ui->mail_read_edit->setVisible(false);
+    this->ui->cargo_read_edit->setVisible(false);
+    this->ui->TNVED_read_edit->setVisible(false);
+    this->ui->direction_read_edit->setVisible(false);
+    this->ui->length_read_spin->setVisible(false);
+    this->ui->width_read_spin->setVisible(false);
+    this->ui->height_read_spin->setVisible(false);
+    this->ui->weight_read_spin->setVisible(false);
+    this->ui->package_read_edit->setVisible(false);
+    this->ui->feature_read_edit->setVisible(false);
+    this->ui->quantity_read_spin->setVisible(false);
+    this->ui->traffic_in_read_edit->setVisible(false);
+    this->ui->traffic_out_read_edit->setVisible(false);
+    this->ui->date_in_read_date->setVisible(false);
+    this->ui->date_out_read_date->setVisible(false);
+    this->ui->storage_read_edit->setVisible(false);
+    this->ui->term_read_spin->setVisible(false);
+    this->ui->demand_read_edit->setVisible(false);
+    this->ui->producer_read_edit->setVisible(false);
+    this->ui->sender_read_edit->setVisible(false);
+    this->ui->port_from_read_edit->setVisible(false);
+    this->ui->country_from_read_edit->setVisible(false);
+    this->ui->port_to_read_edit->setVisible(false);
+    this->ui->country_to_read_edit->setVisible(false);
+    this->ui->receiver_read_edit->setVisible(false);
+    this->ui->other_read_edit->setVisible(false);
+    this->ui->comment_read_edit->setVisible(false);
+    this->ui->bid_status_read_edit->setVisible(false);
+
+    this->ui->organization_read_label->setVisible(false);
+    this->ui->INN_read_label->setVisible(false);
+    this->ui->phone_read_label->setVisible(false);
+    this->ui->mail_read_label->setVisible(false);
+    this->ui->cargo_read_label->setVisible(false);
+    this->ui->TNVED_read_label->setVisible(false);
+    this->ui->direction_read_label->setVisible(false);
+    this->ui->length_read_label->setVisible(false);
+    this->ui->width_read_label->setVisible(false);
+    this->ui->height_read_label->setVisible(false);
+    this->ui->weight_read_label->setVisible(false);
+    this->ui->package_read_label->setVisible(false);
+    this->ui->feature_read_label->setVisible(false);
+    this->ui->quantity_read_label->setVisible(false);
+    this->ui->traffic_in_read_label->setVisible(false);
+    this->ui->traffic_out_read_label->setVisible(false);
+    this->ui->date_in_read_label->setVisible(false);
+    this->ui->date_out_read_label->setVisible(false);
+    this->ui->storage_read_label->setVisible(false);
+    this->ui->term_read_label->setVisible(false);
+    this->ui->demand_read_label->setVisible(false);
+    this->ui->producer_read_label->setVisible(false);
+    this->ui->sender_read_label->setVisible(false);
+    this->ui->port_from_read_label->setVisible(false);
+    this->ui->country_from_read_label->setVisible(false);
+    this->ui->port_to_read_label->setVisible(false);
+    this->ui->country_to_read_label->setVisible(false);
+    this->ui->receiver_read_label->setVisible(false);
+    this->ui->other_read_label->setVisible(false);
+    this->ui->comment_read_label->setVisible(false);
+    this->ui->bid_status_read_label->setVisible(false);
+
+    if (this->bid_read_page == 1)
+    {
+        this->ui->organization_read_edit->setVisible(true);
+        this->ui->INN_read_edit->setVisible(true);
+        this->ui->phone_read_edit->setVisible(true);
+        this->ui->mail_read_edit->setVisible(true);
+        this->ui->cargo_read_edit->setVisible(true);
+        this->ui->TNVED_read_edit->setVisible(true);
+
+        this->ui->organization_read_label->setVisible(true);
+        this->ui->INN_read_label->setVisible(true);
+        this->ui->phone_read_label->setVisible(true);
+        this->ui->mail_read_label->setVisible(true);
+        this->ui->cargo_read_label->setVisible(true);
+        this->ui->TNVED_read_label->setVisible(true);
+    }
+    else if (this->bid_read_page == 2)
+    {
+        this->ui->direction_read_edit->setVisible(true);
+        this->ui->length_read_spin->setVisible(true);
+        this->ui->width_read_spin->setVisible(true);
+        this->ui->height_read_spin->setVisible(true);
+        this->ui->weight_read_spin->setVisible(true);
+
+        this->ui->direction_read_label->setVisible(true);
+        this->ui->length_read_label->setVisible(true);
+        this->ui->width_read_label->setVisible(true);
+        this->ui->height_read_label->setVisible(true);
+        this->ui->weight_read_label->setVisible(true);
+    }
+    else if (this->bid_read_page == 3)
+    {
+        this->ui->package_read_edit->setVisible(true);
+        this->ui->feature_read_edit->setVisible(true);
+        this->ui->quantity_read_spin->setVisible(true);
+        this->ui->traffic_in_read_edit->setVisible(true);
+        this->ui->traffic_out_read_edit->setVisible(true);
+
+        this->ui->package_read_label->setVisible(true);
+        this->ui->feature_read_label->setVisible(true);
+        this->ui->quantity_read_label->setVisible(true);
+        this->ui->traffic_in_read_label->setVisible(true);
+        this->ui->traffic_out_read_label->setVisible(true);
+    }
+    else if (this->bid_read_page == 4)
+    {
+        this->ui->date_in_read_date->setVisible(true);
+        this->ui->date_out_read_date->setVisible(true);
+        this->ui->storage_read_edit->setVisible(true);
+        this->ui->term_read_spin->setVisible(true);
+        this->ui->demand_read_edit->setVisible(true);
+
+        this->ui->date_in_read_label->setVisible(true);
+        this->ui->date_out_read_label->setVisible(true);
+        this->ui->storage_read_label->setVisible(true);
+        this->ui->term_read_label->setVisible(true);
+        this->ui->demand_read_label->setVisible(true);
+    }
+    else if (this->bid_read_page == 5)
+    {
+        this->ui->producer_read_edit->setVisible(true);
+        this->ui->sender_read_edit->setVisible(true);
+        this->ui->port_from_read_edit->setVisible(true);
+        this->ui->country_from_read_edit->setVisible(true);
+        this->ui->port_to_read_edit->setVisible(true);
+
+        this->ui->producer_read_label->setVisible(true);
+        this->ui->sender_read_label->setVisible(true);
+        this->ui->port_from_read_label->setVisible(true);
+        this->ui->country_from_read_label->setVisible(true);
+        this->ui->port_to_read_label->setVisible(true);
+    }
+    else if (this->bid_read_page == 6)
+    {
+        this->ui->country_to_read_edit->setVisible(true);
+        this->ui->receiver_read_edit->setVisible(true);
+        this->ui->other_read_edit->setVisible(true);
+        this->ui->comment_read_edit->setVisible(true);
+        this->ui->bid_status_read_edit->setVisible(true);
+
+        this->ui->country_to_read_label->setVisible(true);
+        this->ui->receiver_read_label->setVisible(true);
+        this->ui->other_read_label->setVisible(true);
+        this->ui->comment_read_label->setVisible(true);
+        this->ui->bid_status_read_label->setVisible(true);
+    }
+
+    if (this->bid_read_page == 1)
+        this->ui->bid_read_left_button->setEnabled(false);
+    else
+        this->ui->bid_read_left_button->setEnabled(true);
+
+    if (this->bid_read_page == 6)
+        this->ui->bid_read_right_button->setEnabled(false);
+    else
+        this->ui->bid_read_right_button->setEnabled(true);
+
+    this->ui->bid_read_page_label->setText("Страница " + QString::number(this->bid_read_page) + " из 6");
+
+    this->ui->scrollArea_3->widget()->adjustSize();
+    this->ui->scrollArea_3->widget()->updateGeometry();
+}
+
 void StorageWindow::ClearBidReadForm()
 {
     // Возвращение исходного состояния формы
@@ -1805,6 +2004,10 @@ void StorageWindow::ClearBidReadForm()
     this->ui->other_read_edit->clear();
     this->ui->comment_read_edit->clear();
     this->ui->bid_status_read_edit->clear();
+
+    this->bid_read_page = 1;
+
+    ChooseBidReadPage();
 }
 
 void StorageWindow::CheckCaseOptionsRead()
@@ -1987,6 +2190,83 @@ void StorageWindow::FindCaseRead()
     }
 }
 
+void StorageWindow::ChooseCaseReadPage()
+{
+    this->ui->country_read_edit->setVisible(false);
+    this->ui->size_read_edit->setVisible(false);
+    this->ui->case_type_read_edit->setVisible(false);
+    this->ui->gross_read_spin->setVisible(false);
+    this->ui->tare_weight_read_spin->setVisible(false);
+    this->ui->carrying_read_spin->setVisible(false);
+    this->ui->capacity_read_spin->setVisible(false);
+    this->ui->IMO_read_edit->setVisible(false);
+    this->ui->position_read_edit->setVisible(false);
+    this->ui->claim_read_edit->setVisible(false);
+    this->ui->case_status_read_edit->setVisible(false);
+
+    this->ui->country_read_label->setVisible(false);
+    this->ui->size_read_label->setVisible(false);
+    this->ui->case_type_read_label->setVisible(false);
+    this->ui->gross_read_label->setVisible(false);
+    this->ui->tare_weight_read_label->setVisible(false);
+    this->ui->carrying_read_label->setVisible(false);
+    this->ui->capacity_read_label->setVisible(false);
+    this->ui->IMO_read_label->setVisible(false);
+    this->ui->position_read_label->setVisible(false);
+    this->ui->claim_read_label->setVisible(false);
+    this->ui->case_status_read_label->setVisible(false);
+
+    if (this->case_read_page == 1)
+    {
+        this->ui->country_read_edit->setVisible(true);
+        this->ui->size_read_edit->setVisible(true);
+        this->ui->case_type_read_edit->setVisible(true);
+        this->ui->gross_read_spin->setVisible(true);
+
+        this->ui->country_read_label->setVisible(true);
+        this->ui->size_read_label->setVisible(true);
+        this->ui->case_type_read_label->setVisible(true);
+        this->ui->gross_read_label->setVisible(true);
+    }
+    else if (this->case_read_page == 2)
+    {
+        this->ui->tare_weight_read_spin->setVisible(true);
+        this->ui->carrying_read_spin->setVisible(true);
+        this->ui->capacity_read_spin->setVisible(true);
+        this->ui->IMO_read_edit->setVisible(true);
+
+        this->ui->tare_weight_read_label->setVisible(true);
+        this->ui->carrying_read_label->setVisible(true);
+        this->ui->capacity_read_label->setVisible(true);
+        this->ui->IMO_read_label->setVisible(true);
+    }
+    else if (this->case_read_page == 3)
+    {
+        this->ui->position_read_edit->setVisible(true);
+        this->ui->claim_read_edit->setVisible(true);
+        this->ui->case_status_read_edit->setVisible(true);
+
+        this->ui->position_read_label->setVisible(true);
+        this->ui->claim_read_label->setVisible(true);
+        this->ui->case_status_read_label->setVisible(true);
+    }
+
+    if (this->case_read_page == 1)
+        this->ui->case_read_left_button->setEnabled(false);
+    else
+        this->ui->case_read_left_button->setEnabled(true);
+
+    if (this->case_read_page == 3)
+        this->ui->case_read_right_button->setEnabled(false);
+    else
+        this->ui->case_read_right_button->setEnabled(true);
+
+    this->ui->case_read_page_label->setText("Страница " + QString::number(this->case_read_page) + " из 3");
+
+    this->ui->scrollArea_4->widget()->adjustSize();
+    this->ui->scrollArea_4->widget()->updateGeometry();
+}
+
 void StorageWindow::ClearCaseReadForm()
 {
     // Возвращение исходного состояния формы
@@ -2001,6 +2281,10 @@ void StorageWindow::ClearCaseReadForm()
     this->ui->position_read_edit->clear();
     this->ui->claim_read_edit->clear();
     this->ui->case_status_read_edit->clear();
+
+    this->case_read_page = 1;
+
+    ChooseCaseReadPage();
 }
 
 void StorageWindow::CheckCaseAddForm()
@@ -2413,6 +2697,104 @@ void StorageWindow::AddCase()
     }
 }
 
+void StorageWindow::ChooseCaseAddPage()
+{
+    this->ui->code_add_edit->setVisible(false);
+    this->ui->rig_add_box->setVisible(false);
+    this->ui->item_add_edit->setVisible(false);
+    this->ui->number_add_edit->setVisible(false);
+    this->ui->country_add_edit->setVisible(false);
+    this->ui->size_add_box->setVisible(false);
+    this->ui->case_type_add_box->setVisible(false);
+    this->ui->gross_add_spin->setVisible(false);
+    this->ui->tare_weight_add_spin->setVisible(false);
+    this->ui->carrying_add_spin->setVisible(false);
+    this->ui->capacity_add_spin->setVisible(false);
+
+    this->ui->code_add_note_label->setVisible(false);
+    this->ui->rig_add_note_label->setVisible(false);
+    this->ui->item_add_note_label->setVisible(false);
+    this->ui->number_add_note_label->setVisible(false);
+    this->ui->country_add_note_label->setVisible(false);
+    this->ui->size_add_note_label->setVisible(false);
+    this->ui->case_type_add_note_label->setVisible(false);
+    this->ui->gross_add_note_label->setVisible(false);
+    this->ui->tare_weight_add_note_label->setVisible(false);
+    this->ui->carrying_add_note_label->setVisible(false);
+    this->ui->capacity_add_note_label->setVisible(false);
+
+    this->ui->code_add_label->setVisible(false);
+    this->ui->rig_add_label->setVisible(false);
+    this->ui->item_add_label->setVisible(false);
+    this->ui->number_add_label->setVisible(false);
+    this->ui->country_add_label->setVisible(false);
+    this->ui->size_add_label->setVisible(false);
+    this->ui->case_type_add_label->setVisible(false);
+    this->ui->gross_add_label->setVisible(false);
+    this->ui->tare_weight_add_label->setVisible(false);
+    this->ui->carrying_add_label->setVisible(false);
+    this->ui->capacity_add_label->setVisible(false);
+
+    if (this->case_add_page == 1)
+    {
+        this->ui->code_add_edit->setVisible(true);
+        this->ui->rig_add_box->setVisible(true);
+        this->ui->item_add_edit->setVisible(true);
+        this->ui->number_add_edit->setVisible(true);
+        this->ui->country_add_edit->setVisible(true);
+        this->ui->size_add_box->setVisible(true);
+
+        this->ui->code_add_note_label->setVisible(true);
+        this->ui->rig_add_note_label->setVisible(true);
+        this->ui->item_add_note_label->setVisible(true);
+        this->ui->number_add_note_label->setVisible(true);
+        this->ui->country_add_note_label->setVisible(true);
+        this->ui->size_add_note_label->setVisible(true);
+
+        this->ui->code_add_label->setVisible(true);
+        this->ui->rig_add_label->setVisible(true);
+        this->ui->item_add_label->setVisible(true);
+        this->ui->number_add_label->setVisible(true);
+        this->ui->country_add_label->setVisible(true);
+        this->ui->size_add_label->setVisible(true);
+    }
+    else if (this->case_add_page == 2)
+    {
+        this->ui->case_type_add_box->setVisible(true);
+        this->ui->gross_add_spin->setVisible(true);
+        this->ui->tare_weight_add_spin->setVisible(true);
+        this->ui->carrying_add_spin->setVisible(true);
+        this->ui->capacity_add_spin->setVisible(true);
+
+        this->ui->case_type_add_note_label->setVisible(true);
+        this->ui->gross_add_note_label->setVisible(true);
+        this->ui->tare_weight_add_note_label->setVisible(true);
+        this->ui->carrying_add_note_label->setVisible(true);
+        this->ui->capacity_add_note_label->setVisible(true);
+
+        this->ui->case_type_add_label->setVisible(true);
+        this->ui->gross_add_label->setVisible(true);
+        this->ui->tare_weight_add_label->setVisible(true);
+        this->ui->carrying_add_label->setVisible(true);
+        this->ui->capacity_add_label->setVisible(true);
+    }
+
+    if (this->case_add_page == 1)
+        this->ui->case_add_left_button->setEnabled(false);
+    else
+        this->ui->case_add_left_button->setEnabled(true);
+
+    if (this->case_add_page == 2)
+        this->ui->case_add_right_button->setEnabled(false);
+    else
+        this->ui->case_add_right_button->setEnabled(true);
+
+    this->ui->case_add_page_label->setText("Страница " + QString::number(this->case_add_page) + " из 2");
+
+    this->ui->scrollArea_5->widget()->adjustSize();
+    this->ui->scrollArea_5->widget()->updateGeometry();
+}
+
 void StorageWindow::ClearCaseAddForm()
 {
     // Возвращение содержимого полей к начальному состоянию
@@ -2466,6 +2848,10 @@ void StorageWindow::ClearCaseAddForm()
     this->ui->tare_weight_add_note_label->setStyleSheet("color: #FFFFFF;");
     this->ui->carrying_add_note_label->setStyleSheet("color: #FFFFFF;");
     this->ui->capacity_add_note_label->setStyleSheet("color: #FFFFFF;");
+
+    this->case_add_page = 1;
+
+    ChooseCaseAddPage();
 
     // Возвращение кнопок к начальному состоянию
     this->ui->space_1_label->clear();
@@ -3150,6 +3536,109 @@ void StorageWindow::UpdateCase()
     }
 }
 
+void StorageWindow::ChooseCaseUpdatePage()
+{
+    this->ui->new_code_update_edit->setVisible(false);
+    this->ui->new_rig_update_box->setVisible(false);
+    this->ui->new_item_update_edit->setVisible(false);
+    this->ui->new_number_update_edit->setVisible(false);
+    this->ui->country_update_edit->setVisible(false);
+    this->ui->size_update_box->setVisible(false);
+    this->ui->case_type_update_box->setVisible(false);
+    this->ui->gross_update_spin->setVisible(false);
+    this->ui->tare_weight_update_spin->setVisible(false);
+    this->ui->carrying_update_spin->setVisible(false);
+    this->ui->capacity_update_spin->setVisible(false);
+
+    this->ui->new_code_update_note_label->setVisible(false);
+    this->ui->new_rig_update_note_label->setVisible(false);
+    this->ui->new_item_update_note_label->setVisible(false);
+    this->ui->new_number_update_note_label->setVisible(false);
+    this->ui->country_update_note_label->setVisible(false);
+    this->ui->size_update_note_label->setVisible(false);
+    this->ui->case_type_update_note_label->setVisible(false);
+    this->ui->gross_update_note_label->setVisible(false);
+    this->ui->tare_weight_update_note_label->setVisible(false);
+    this->ui->carrying_update_note_label->setVisible(false);
+    this->ui->capacity_update_note_label->setVisible(false);
+
+    this->ui->new_code_update_label->setVisible(false);
+    this->ui->new_rig_update_label->setVisible(false);
+    this->ui->new_item_update_label->setVisible(false);
+    this->ui->new_number_update_label->setVisible(false);
+    this->ui->country_update_label->setVisible(false);
+    this->ui->size_update_label->setVisible(false);
+    this->ui->case_type_update_label->setVisible(false);
+    this->ui->gross_update_label->setVisible(false);
+    this->ui->tare_weight_update_label->setVisible(false);
+    this->ui->carrying_update_label->setVisible(false);
+    this->ui->capacity_update_label->setVisible(false);
+
+    if (this->case_update_page == 1)
+    {
+        this->ui->new_code_update_edit->setVisible(true);
+        this->ui->new_rig_update_box->setVisible(true);
+        this->ui->new_item_update_edit->setVisible(true);
+        this->ui->new_number_update_edit->setVisible(true);
+
+        this->ui->new_code_update_note_label->setVisible(true);
+        this->ui->new_rig_update_note_label->setVisible(true);
+        this->ui->new_item_update_note_label->setVisible(true);
+        this->ui->new_number_update_note_label->setVisible(true);
+
+        this->ui->new_code_update_label->setVisible(true);
+        this->ui->new_rig_update_label->setVisible(true);
+        this->ui->new_item_update_label->setVisible(true);
+        this->ui->new_number_update_label->setVisible(true);
+    }
+    else if (this->case_update_page == 2)
+    {
+        this->ui->country_update_edit->setVisible(true);
+        this->ui->size_update_box->setVisible(true);
+        this->ui->case_type_update_box->setVisible(true);
+        this->ui->gross_update_spin->setVisible(true);
+
+        this->ui->country_update_note_label->setVisible(true);
+        this->ui->size_update_note_label->setVisible(true);
+        this->ui->case_type_update_note_label->setVisible(true);
+        this->ui->gross_update_note_label->setVisible(true);
+
+        this->ui->country_update_label->setVisible(true);
+        this->ui->size_update_label->setVisible(true);
+        this->ui->case_type_update_label->setVisible(true);
+        this->ui->gross_update_label->setVisible(true);
+    }
+    else if (this->case_update_page == 3)
+    {
+        this->ui->tare_weight_update_spin->setVisible(true);
+        this->ui->carrying_update_spin->setVisible(true);
+        this->ui->capacity_update_spin->setVisible(true);
+
+        this->ui->tare_weight_update_note_label->setVisible(true);
+        this->ui->carrying_update_note_label->setVisible(true);
+        this->ui->capacity_update_note_label->setVisible(true);
+
+        this->ui->tare_weight_update_label->setVisible(true);
+        this->ui->carrying_update_label->setVisible(true);
+        this->ui->capacity_update_label->setVisible(true);
+    }
+
+    if (this->case_update_page == 1)
+        this->ui->case_update_left_button->setEnabled(false);
+    else
+        this->ui->case_update_left_button->setEnabled(true);
+
+    if (this->case_update_page == 3)
+        this->ui->case_update_right_button->setEnabled(false);
+    else
+        this->ui->case_update_right_button->setEnabled(true);
+
+    this->ui->case_update_page_label->setText("Страница " + QString::number(this->case_update_page) + " из 3");
+
+    this->ui->scrollArea_6->widget()->adjustSize();
+    this->ui->scrollArea_6->widget()->updateGeometry();
+}
+
 void StorageWindow::ClearCaseUpdateForm()
 {
     // Возвращение содержимого полей к начальному состоянию
@@ -3204,6 +3693,10 @@ void StorageWindow::ClearCaseUpdateForm()
     this->ui->carrying_update_note_label->setStyleSheet("color: #FFFFFF;");
     this->ui->capacity_update_note_label->setStyleSheet("color: #FFFFFF;");
 
+    this->case_update_page = 1;
+
+    ChooseCaseUpdatePage();
+
     // Возвращение кнопок к начальному состоянию
     this->ui->space_3_label->clear();
     this->ui->case_check_update_button->setEnabled(true);
@@ -3224,6 +3717,8 @@ void StorageWindow::ActivateCaseUpdateForm(bool flag)
     this->ui->tare_weight_update_spin->setEnabled(flag);
     this->ui->carrying_update_spin->setEnabled(flag);
     this->ui->capacity_update_spin->setEnabled(flag);
+
+    this->ui->case_update_right_button->setEnabled(flag);
 
     // Установка внешнего вида полей
     if (flag)

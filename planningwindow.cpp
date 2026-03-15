@@ -48,6 +48,9 @@ PlanningWindow::PlanningWindow(QString surname, QString name, QString patronym, 
     this->ui->ship_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     this->ui->ship_table->setModel(this->ship_model);
 
+    // Установка страниц форм
+    this->case_read_page = 1;
+
     // Регулярные выражения для валидаторов
     QRegularExpression code_pattern(R"([A-Z]{3})");
     QRegularExpression item_pattern(R"([0-9]{6})");
@@ -137,6 +140,10 @@ PlanningWindow::PlanningWindow(QString surname, QString name, QString patronym, 
     connect(this->ui->number_read_edit, &QLineEdit::textChanged, this, &PlanningWindow::CheckCaseOptionsRead);
     connect(this->ui->case_choose_read_button, &QPushButton::clicked, this, &PlanningWindow::FindCaseRead);
 
+    // Пагинация формы просмотра контейнера
+    connect(this->ui->case_read_left_button, &QPushButton::clicked, this, [this](){ this->case_read_page--; ChooseCaseReadPage(); });
+    connect(this->ui->case_read_right_button, &QPushButton::clicked, this, [this](){ this->case_read_page++; ChooseCaseReadPage(); });
+
     // Установка связей между сигналами и методами для просмотра морского судна
     connect(this->ui->ship_IMO_read_edit, &QLineEdit::textChanged, this, &PlanningWindow::CheckIMORead);
     connect(this->ui->ship_choose_read_button, &QPushButton::clicked, this, &PlanningWindow::FindShipRead);
@@ -171,6 +178,8 @@ PlanningWindow::PlanningWindow(QString surname, QString name, QString patronym, 
     // Заполнение таблиц
     CaseList();
     ShipList();
+
+    ChooseCaseReadPage();
 }
 
 PlanningWindow::~PlanningWindow()
@@ -1454,6 +1463,83 @@ void PlanningWindow::FindCaseRead()
     }
 }
 
+void PlanningWindow::ChooseCaseReadPage()
+{
+    this->ui->country_read_edit->setVisible(false);
+    this->ui->size_read_edit->setVisible(false);
+    this->ui->case_type_read_edit->setVisible(false);
+    this->ui->gross_read_spin->setVisible(false);
+    this->ui->tare_weight_read_spin->setVisible(false);
+    this->ui->carrying_read_spin->setVisible(false);
+    this->ui->capacity_read_spin->setVisible(false);
+    this->ui->IMO_read_edit->setVisible(false);
+    this->ui->position_read_edit->setVisible(false);
+    this->ui->claim_read_edit->setVisible(false);
+    this->ui->case_status_read_edit->setVisible(false);
+
+    this->ui->country_read_label->setVisible(false);
+    this->ui->size_read_label->setVisible(false);
+    this->ui->case_type_read_label->setVisible(false);
+    this->ui->gross_read_label->setVisible(false);
+    this->ui->tare_weight_read_label->setVisible(false);
+    this->ui->carrying_read_label->setVisible(false);
+    this->ui->capacity_read_label->setVisible(false);
+    this->ui->IMO_read_label->setVisible(false);
+    this->ui->position_read_label->setVisible(false);
+    this->ui->claim_read_label->setVisible(false);
+    this->ui->case_status_read_label->setVisible(false);
+
+    if (this->case_read_page == 1)
+    {
+        this->ui->country_read_edit->setVisible(true);
+        this->ui->size_read_edit->setVisible(true);
+        this->ui->case_type_read_edit->setVisible(true);
+        this->ui->gross_read_spin->setVisible(true);
+
+        this->ui->country_read_label->setVisible(true);
+        this->ui->size_read_label->setVisible(true);
+        this->ui->case_type_read_label->setVisible(true);
+        this->ui->gross_read_label->setVisible(true);
+    }
+    else if (this->case_read_page == 2)
+    {
+        this->ui->tare_weight_read_spin->setVisible(true);
+        this->ui->carrying_read_spin->setVisible(true);
+        this->ui->capacity_read_spin->setVisible(true);
+        this->ui->IMO_read_edit->setVisible(true);
+
+        this->ui->tare_weight_read_label->setVisible(true);
+        this->ui->carrying_read_label->setVisible(true);
+        this->ui->capacity_read_label->setVisible(true);
+        this->ui->IMO_read_label->setVisible(true);
+    }
+    else if (this->case_read_page == 3)
+    {
+        this->ui->position_read_edit->setVisible(true);
+        this->ui->claim_read_edit->setVisible(true);
+        this->ui->case_status_read_edit->setVisible(true);
+
+        this->ui->position_read_label->setVisible(true);
+        this->ui->claim_read_label->setVisible(true);
+        this->ui->case_status_read_label->setVisible(true);
+    }
+
+    if (this->case_read_page == 1)
+        this->ui->case_read_left_button->setEnabled(false);
+    else
+        this->ui->case_read_left_button->setEnabled(true);
+
+    if (this->case_read_page == 3)
+        this->ui->case_read_right_button->setEnabled(false);
+    else
+        this->ui->case_read_right_button->setEnabled(true);
+
+    this->ui->case_read_page_label->setText("Страница " + QString::number(this->case_read_page) + " из 3");
+
+    this->ui->scrollArea_4->widget()->adjustSize();
+    this->ui->scrollArea_4->widget()->updateGeometry();
+}
+
 void PlanningWindow::ClearCaseReadForm()
 {
     // Возвращение исходного состояния формы
@@ -1468,6 +1554,10 @@ void PlanningWindow::ClearCaseReadForm()
     this->ui->position_read_edit->clear();
     this->ui->claim_read_edit->clear();
     this->ui->case_status_read_edit->clear();
+
+    this->case_read_page = 1;
+
+    ChooseCaseReadPage();
 }
 
 void PlanningWindow::CheckIMORead()

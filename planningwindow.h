@@ -21,6 +21,7 @@ private:
     QStandardItemModel* ship_model;
     int case_page;
     int ship_page;
+    int case_read_page;
     QString host;
     QString username;
     QString case_code;
@@ -48,6 +49,7 @@ public:
     void ShipList();
     void CheckCaseOptionsRead();
     void FindCaseRead();
+    void ChooseCaseReadPage();
     void ClearCaseReadForm();
     void CheckIMORead();
     void FindShipRead();

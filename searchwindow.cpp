@@ -36,6 +36,9 @@ SearchWindow::SearchWindow(QString surname, QString name, QString patronym, QStr
     this->ui->bid_table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     this->ui->bid_table->setModel(this->bid_model);
 
+    // Установка страниц форм
+    this->bid_read_page = 1;
+
     // Регулярные выражения для валидаторов
     QRegularExpression bid_id_pattern(R"([0-9]{5}-[0-9]{2}/ОМиДР)");
     QRegularExpression date_pattern(R"((0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.[0-9]{2})");
@@ -62,7 +65,7 @@ SearchWindow::SearchWindow(QString surname, QString name, QString patronym, QStr
     connect(this->ui->condition_6_check, &QCheckBox::checkStateChanged, this, &SearchWindow::CheckBidConditionsWork);
     connect(this->ui->condition_7_check, &QCheckBox::checkStateChanged, this, &SearchWindow::CheckBidConditionsWork);
     connect(this->ui->bid_check_work_button, &QPushButton::clicked, this, &SearchWindow::CheckBidFulfillmentWork);
-    connect(this->ui->comment_work_edit, &QTextEdit::textChanged, this->ui->comment_work_label, &QLabel::clear);
+    connect(this->ui->comment_work_edit, &QTextEdit::textChanged, this->ui->result_work_label, &QLabel::clear);
     connect(this->ui->refusal_work_button, &QPushButton::clicked, this, &SearchWindow::Refusal);
     connect(this->ui->reception_work_button, &QPushButton::clicked, this, &SearchWindow::Reception);
 
@@ -79,8 +82,14 @@ SearchWindow::SearchWindow(QString surname, QString name, QString patronym, QStr
     connect(this->ui->bid_id_read_edit, &QLineEdit::textChanged, this, &SearchWindow::CheckBidIdRead);
     connect(this->ui->bid_choose_read_button, &QPushButton::clicked, this, &SearchWindow::FindBidRead);
 
+    // Пагинация формы просмотра заявки
+    connect(this->ui->bid_read_left_button, &QPushButton::clicked, this, [this](){ this->bid_read_page--; ChooseBidReadPage(); });
+    connect(this->ui->bid_read_right_button, &QPushButton::clicked, this, [this](){ this->bid_read_page++; ChooseBidReadPage(); });
+
     // Заполнение таблиц
     BidList();
+
+    ChooseBidReadPage();
 }
 
 SearchWindow::~SearchWindow()
@@ -894,6 +903,175 @@ void SearchWindow::FindBidRead()
     }
 }
 
+void SearchWindow::ChooseBidReadPage()
+{
+    this->ui->organization_read_edit->setVisible(false);
+    this->ui->INN_read_edit->setVisible(false);
+    this->ui->phone_read_edit->setVisible(false);
+    this->ui->mail_read_edit->setVisible(false);
+    this->ui->cargo_read_edit->setVisible(false);
+    this->ui->TNVED_read_edit->setVisible(false);
+    this->ui->direction_read_edit->setVisible(false);
+    this->ui->length_read_spin->setVisible(false);
+    this->ui->width_read_spin->setVisible(false);
+    this->ui->height_read_spin->setVisible(false);
+    this->ui->weight_read_spin->setVisible(false);
+    this->ui->package_read_edit->setVisible(false);
+    this->ui->feature_read_edit->setVisible(false);
+    this->ui->quantity_read_spin->setVisible(false);
+    this->ui->traffic_in_read_edit->setVisible(false);
+    this->ui->traffic_out_read_edit->setVisible(false);
+    this->ui->date_in_read_date->setVisible(false);
+    this->ui->date_out_read_date->setVisible(false);
+    this->ui->storage_read_edit->setVisible(false);
+    this->ui->term_read_spin->setVisible(false);
+    this->ui->demand_read_edit->setVisible(false);
+    this->ui->producer_read_edit->setVisible(false);
+    this->ui->sender_read_edit->setVisible(false);
+    this->ui->port_from_read_edit->setVisible(false);
+    this->ui->country_from_read_edit->setVisible(false);
+    this->ui->port_to_read_edit->setVisible(false);
+    this->ui->country_to_read_edit->setVisible(false);
+    this->ui->receiver_read_edit->setVisible(false);
+    this->ui->other_read_edit->setVisible(false);
+    this->ui->comment_read_edit->setVisible(false);
+    this->ui->bid_status_read_edit->setVisible(false);
+
+    this->ui->organization_read_label->setVisible(false);
+    this->ui->INN_read_label->setVisible(false);
+    this->ui->phone_read_label->setVisible(false);
+    this->ui->mail_read_label->setVisible(false);
+    this->ui->cargo_read_label->setVisible(false);
+    this->ui->TNVED_read_label->setVisible(false);
+    this->ui->direction_read_label->setVisible(false);
+    this->ui->length_read_label->setVisible(false);
+    this->ui->width_read_label->setVisible(false);
+    this->ui->height_read_label->setVisible(false);
+    this->ui->weight_read_label->setVisible(false);
+    this->ui->package_read_label->setVisible(false);
+    this->ui->feature_read_label->setVisible(false);
+    this->ui->quantity_read_label->setVisible(false);
+    this->ui->traffic_in_read_label->setVisible(false);
+    this->ui->traffic_out_read_label->setVisible(false);
+    this->ui->date_in_read_label->setVisible(false);
+    this->ui->date_out_read_label->setVisible(false);
+    this->ui->storage_read_label->setVisible(false);
+    this->ui->term_read_label->setVisible(false);
+    this->ui->demand_read_label->setVisible(false);
+    this->ui->producer_read_label->setVisible(false);
+    this->ui->sender_read_label->setVisible(false);
+    this->ui->port_from_read_label->setVisible(false);
+    this->ui->country_from_read_label->setVisible(false);
+    this->ui->port_to_read_label->setVisible(false);
+    this->ui->country_to_read_label->setVisible(false);
+    this->ui->receiver_read_label->setVisible(false);
+    this->ui->other_read_label->setVisible(false);
+    this->ui->comment_read_label->setVisible(false);
+    this->ui->bid_status_read_label->setVisible(false);
+
+    if (this->bid_read_page == 1)
+    {
+        this->ui->organization_read_edit->setVisible(true);
+        this->ui->INN_read_edit->setVisible(true);
+        this->ui->phone_read_edit->setVisible(true);
+        this->ui->mail_read_edit->setVisible(true);
+        this->ui->cargo_read_edit->setVisible(true);
+        this->ui->TNVED_read_edit->setVisible(true);
+
+        this->ui->organization_read_label->setVisible(true);
+        this->ui->INN_read_label->setVisible(true);
+        this->ui->phone_read_label->setVisible(true);
+        this->ui->mail_read_label->setVisible(true);
+        this->ui->cargo_read_label->setVisible(true);
+        this->ui->TNVED_read_label->setVisible(true);
+    }
+    else if (this->bid_read_page == 2)
+    {
+        this->ui->direction_read_edit->setVisible(true);
+        this->ui->length_read_spin->setVisible(true);
+        this->ui->width_read_spin->setVisible(true);
+        this->ui->height_read_spin->setVisible(true);
+        this->ui->weight_read_spin->setVisible(true);
+
+        this->ui->direction_read_label->setVisible(true);
+        this->ui->length_read_label->setVisible(true);
+        this->ui->width_read_label->setVisible(true);
+        this->ui->height_read_label->setVisible(true);
+        this->ui->weight_read_label->setVisible(true);
+    }
+    else if (this->bid_read_page == 3)
+    {
+        this->ui->package_read_edit->setVisible(true);
+        this->ui->feature_read_edit->setVisible(true);
+        this->ui->quantity_read_spin->setVisible(true);
+        this->ui->traffic_in_read_edit->setVisible(true);
+        this->ui->traffic_out_read_edit->setVisible(true);
+
+        this->ui->package_read_label->setVisible(true);
+        this->ui->feature_read_label->setVisible(true);
+        this->ui->quantity_read_label->setVisible(true);
+        this->ui->traffic_in_read_label->setVisible(true);
+        this->ui->traffic_out_read_label->setVisible(true);
+    }
+    else if (this->bid_read_page == 4)
+    {
+        this->ui->date_in_read_date->setVisible(true);
+        this->ui->date_out_read_date->setVisible(true);
+        this->ui->storage_read_edit->setVisible(true);
+        this->ui->term_read_spin->setVisible(true);
+        this->ui->demand_read_edit->setVisible(true);
+
+        this->ui->date_in_read_label->setVisible(true);
+        this->ui->date_out_read_label->setVisible(true);
+        this->ui->storage_read_label->setVisible(true);
+        this->ui->term_read_label->setVisible(true);
+        this->ui->demand_read_label->setVisible(true);
+    }
+    else if (this->bid_read_page == 5)
+    {
+        this->ui->producer_read_edit->setVisible(true);
+        this->ui->sender_read_edit->setVisible(true);
+        this->ui->port_from_read_edit->setVisible(true);
+        this->ui->country_from_read_edit->setVisible(true);
+        this->ui->port_to_read_edit->setVisible(true);
+
+        this->ui->producer_read_label->setVisible(true);
+        this->ui->sender_read_label->setVisible(true);
+        this->ui->port_from_read_label->setVisible(true);
+        this->ui->country_from_read_label->setVisible(true);
+        this->ui->port_to_read_label->setVisible(true);
+    }
+    else if (this->bid_read_page == 6)
+    {
+        this->ui->country_to_read_edit->setVisible(true);
+        this->ui->receiver_read_edit->setVisible(true);
+        this->ui->other_read_edit->setVisible(true);
+        this->ui->comment_read_edit->setVisible(true);
+        this->ui->bid_status_read_edit->setVisible(true);
+
+        this->ui->country_to_read_label->setVisible(true);
+        this->ui->receiver_read_label->setVisible(true);
+        this->ui->other_read_label->setVisible(true);
+        this->ui->comment_read_label->setVisible(true);
+        this->ui->bid_status_read_label->setVisible(true);
+    }
+
+    if (this->bid_read_page == 1)
+        this->ui->bid_read_left_button->setEnabled(false);
+    else
+        this->ui->bid_read_left_button->setEnabled(true);
+
+    if (this->bid_read_page == 6)
+        this->ui->bid_read_right_button->setEnabled(false);
+    else
+        this->ui->bid_read_right_button->setEnabled(true);
+
+    this->ui->bid_read_page_label->setText("Страница " + QString::number(this->bid_read_page) + " из 6");
+
+    this->ui->scrollArea_6->widget()->adjustSize();
+    this->ui->scrollArea_6->widget()->updateGeometry();
+}
+
 void SearchWindow::ClearBidReadForm()
 {
     // Возвращение исходного состояния формы
@@ -928,6 +1106,10 @@ void SearchWindow::ClearBidReadForm()
     this->ui->other_read_edit->clear();
     this->ui->comment_read_edit->clear();
     this->ui->bid_status_read_edit->clear();
+
+    this->bid_read_page = 1;
+
+    ChooseBidReadPage();
 }
 
 void SearchWindow::closeEvent(QCloseEvent *event)

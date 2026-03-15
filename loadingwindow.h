@@ -19,6 +19,8 @@ private:
     Ui::LoadingWindow *ui;
     QStandardItemModel* case_model;
     int case_page;
+    int bid_read_page;
+    int case_read_page;
     QString host;
     QString username;
     QString case_code;
@@ -39,9 +41,11 @@ public:
     void CaseList();
     void CheckCaseOptionsRead();
     void FindCaseRead();
+    void ChooseCaseReadPage();
     void ClearCaseReadForm();
     void CheckBidIdRead();
     void FindBidRead();
+    void ChooseBidReadPage();
     void ClearBidReadForm();
     void closeEvent(QCloseEvent* event) override;
 };

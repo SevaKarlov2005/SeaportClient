@@ -23,6 +23,10 @@ private:
     int bid_page;
     int case_page;
     int ship_page;
+    int bid_add_page;
+    int bid_update_page;
+    int bid_read_page;
+    int case_read_page;
     QString host;
     QString username;
     QString bid_number;
@@ -35,6 +39,7 @@ public:
     void CheckBidAddContents();
     void CheckBidAddFeasibility();
     void AddBid();
+    void ChooseBidAddPage();
     void ClearBidAddForm();
     void CheckBidIdUpdate();
     void FindBidUpdate();
@@ -42,6 +47,7 @@ public:
     void CheckBidUpdateContents();
     void CheckBidUpdateFeasibility();
     void UpdateBid();
+    void ChooseBidUpdatePage();
     void ClearBidUpdateForm();
     void ActivateBidUpdateForm(bool flag);
     void DeleteBid();
@@ -50,9 +56,11 @@ public:
     void ShipList();
     void CheckBidIdRead();
     void FindBidRead();
+    void ChooseBidReadPage();
     void ClearBidReadForm();
     void CheckCaseOptionsRead();
     void FindCaseRead();
+    void ChooseCaseReadPage();
     void ClearCaseReadForm();
     void CheckIMORead();
     void FindShipRead();
